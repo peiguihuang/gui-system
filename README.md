@@ -10,7 +10,7 @@ Springboot作为基础框架，使用mybatis作为持久层框架
 
 # 一、gui-system-权限管理
 
-![Image text](https://github.com/peiguihuang/gui-system/blob/master/img/%E5%B7%A5%E4%BD%9C%E6%B5%81.png)
+![Image text](https://github.com/peiguihuang/gui-system/blob/master/img/%E6%9D%83%E9%99%90.png)
 
 # 一、gui-system-系统工具
 
