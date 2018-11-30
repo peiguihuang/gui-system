@@ -1,5 +1,5 @@
 # gui-system
-单机网站开发平台
+开发平台
 
 Springboot作为基础框架，使用mybatis作为持久层框架
 使用官方推荐的thymeleaf做为模板引擎，shiro作为安全框架
