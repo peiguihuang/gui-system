@@ -7,3 +7,8 @@ Springboot作为基础框架，使用mybatis作为持久层框架
 
 
 定位于快速二次开发管理网站，中小型网站，restfull接口
+
+# gui-system-权限管理
+
+![Image text](https://raw.github.com/yourName/repositpry/master/yourprojectName/img-folder/test.jpg)
+
