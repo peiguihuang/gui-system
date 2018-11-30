@@ -10,5 +10,5 @@ Springboot作为基础框架，使用mybatis作为持久层框架
 
 # gui-system-权限管理
 
-![Image text](https://raw.github.com/yourName/repositpry/master/yourprojectName/img-folder/test.jpg)
+![Image text](https://github.com/peiguihuang/gui-system/blob/master/img/%E5%B7%A5%E4%BD%9C%E6%B5%81.png)
 
