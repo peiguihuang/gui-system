@@ -3,8 +3,9 @@ package com.gui.blog.controller;
 import com.gui.blog.domain.ContentDO;
 import com.gui.blog.service.ContentService;
 import com.gui.common.utils.DateUtils;
-import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
+import com.gui.dtos.BasePageResponse;
+import com.gui.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +31,12 @@ public class BlogController {
 
 	@ResponseBody
 	@GetMapping("/open/list")
-	public PageUtils opentList(@RequestParam Map<String, Object> params) {
+	public BasePageResponse opentList(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		List<ContentDO> bContentList = bContentService.list(query);
 		int total = bContentService.count(query);
-		PageUtils pageUtils = new PageUtils(bContentList, total);
-		return pageUtils;
+
+		return ResponseUtils.buildPageSuccess(total,bContentList);
 	}
 
 	@GetMapping("/open/post/{cid}")

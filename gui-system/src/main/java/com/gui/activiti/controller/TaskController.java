@@ -3,7 +3,8 @@ package com.gui.activiti.controller;
 import com.gui.activiti.service.ActTaskService;
 import com.gui.activiti.vo.ProcessVO;
 import com.gui.activiti.vo.TaskVO;
-import com.gui.common.utils.PageUtils;
+import com.gui.dtos.BasePageResponse;
+import com.gui.utils.ResponseUtils;
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.TaskService;
@@ -42,7 +43,7 @@ public class TaskController {
     }
 
     @GetMapping("/gotoList")
-    PageUtils list(int offset, int limit) {
+    BasePageResponse list(int offset, int limit) {
         List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
                 .listPage(offset, limit);
         int count = (int) repositoryService.createProcessDefinitionQuery().count();
@@ -51,8 +52,7 @@ public class TaskController {
             list.add(new ProcessVO(processDefinition));
         }
 
-        PageUtils pageUtils = new PageUtils(list, count);
-        return pageUtils;
+        return ResponseUtils.buildPageSuccess(count,list);
     }
 
     @GetMapping("/form/{procDefId}")

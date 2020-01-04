@@ -4,8 +4,8 @@ import com.gui.blog.domain.ContentDO;
 import com.gui.blog.service.ContentService;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
-import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -40,12 +40,11 @@ public class ContentController extends BaseController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("blog:bContent:bContent")
-	public PageUtils list(@RequestParam Map<String, Object> params) {
+	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		List<ContentDO> bContentList = bContentService.list(query);
 		int total = bContentService.count(query);
-		PageUtils pageUtils = new PageUtils(bContentList, total);
-		return pageUtils;
+		return ResponseUtils.buildPageSuccess(total,bContentList);
 	}
 
 	@GetMapping("/add")

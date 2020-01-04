@@ -4,8 +4,8 @@ import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
 import com.gui.common.domain.DictDO;
 import com.gui.common.service.DictService;
-import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.oa.domain.NotifyDO;
 import com.gui.oa.domain.NotifyRecordDO;
@@ -50,13 +50,12 @@ public class NotifyController extends BaseController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("oa:notify:notify")
-	public PageUtils list(@RequestParam Map<String, Object> params) {
+	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
 		List<NotifyDO> notifyList = notifyService.list(query);
 		int total = notifyService.count(query);
-		PageUtils pageUtils = new PageUtils(notifyList, total);
-		return pageUtils;
+		return ResponseUtils.buildPageSuccess(total,notifyList);
 	}
 
 	@GetMapping("/add")
@@ -144,7 +143,7 @@ public class NotifyController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/message")
-	PageUtils message() {
+	BasePageResponse message() {
 		Map<String, Object> params = new HashMap<>(16);
 		params.put("offset", 0);
 		params.put("limit", 3);
@@ -161,7 +160,7 @@ public class NotifyController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/selfList")
-	PageUtils selfList(@RequestParam Map<String, Object> params) {
+	BasePageResponse selfList(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		query.put("userId", getUserId());
 

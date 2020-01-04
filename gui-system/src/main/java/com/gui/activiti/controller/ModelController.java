@@ -2,10 +2,10 @@ package com.gui.activiti.controller;
 
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
-import com.gui.common.utils.PageUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.utils.ResponseUtils;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
@@ -55,12 +55,11 @@ public class ModelController extends BaseController{
     }
 
     @GetMapping("/model/list")
-    PageUtils list(int offset, int limit) {
+    BasePageResponse list(int offset, int limit) {
         List<Model> list = repositoryService.createModelQuery().listPage(offset
                 , limit);
         int total = (int) repositoryService.createModelQuery().count();
-        PageUtils pageUtil = new PageUtils(list, total);
-        return pageUtil;
+        return ResponseUtils.buildPageSuccess(total,list);
     }
 
     @RequestMapping("/model/add")

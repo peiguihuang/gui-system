@@ -3,8 +3,8 @@ package com.gui.common.controller;
 import com.gui.common.config.Constant;
 import com.gui.common.domain.TaskDO;
 import com.gui.common.service.JobService;
-import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +34,12 @@ public class JobController extends BaseController{
 
 	@ResponseBody
 	@GetMapping("/list")
-	public PageUtils list(@RequestParam Map<String, Object> params) {
+	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
 		List<TaskDO> taskScheduleJobList = taskScheduleJobService.list(query);
 		int total = taskScheduleJobService.count(query);
-		PageUtils pageUtils = new PageUtils(taskScheduleJobList, total);
-		return pageUtils;
+		return ResponseUtils.buildPageSuccess(total,taskScheduleJobList);
 	}
 
 	@GetMapping("/add")

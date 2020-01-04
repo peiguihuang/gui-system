@@ -1,6 +1,6 @@
 package com.gui.oa.service;
 
-import com.gui.common.utils.PageUtils;
+import com.gui.dtos.BasePageResponse;
 import com.gui.oa.domain.NotifyDO;
 
 import java.util.List;
@@ -31,5 +31,5 @@ public interface NotifyService {
 
 //	Map<String, Object> message(Long userId);
 
-	PageUtils selfList(Map<String, Object> map);
+	BasePageResponse selfList(Map<String, Object> map);
 }

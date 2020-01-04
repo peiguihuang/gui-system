@@ -6,6 +6,7 @@ import com.gui.common.service.FileService;
 import com.gui.common.utils.*;
 import javax.servlet.http.HttpServletRequest;
 
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -47,13 +48,12 @@ public class FileController extends BaseController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("common:sysFile:sysFile")
-	public PageUtils list(@RequestParam Map<String, Object> params) {
+	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
 		List<FileDO> sysFileList = sysFileService.list(query);
 		int total = sysFileService.count(query);
-		PageUtils pageUtils = new PageUtils(sysFileList, total);
-		return pageUtils;
+		return ResponseUtils.buildPageSuccess(total,sysFileList);
 	}
 
 	@GetMapping("/add")

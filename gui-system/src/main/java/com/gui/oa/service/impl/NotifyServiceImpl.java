@@ -1,7 +1,9 @@
 package com.gui.oa.service.impl;
 
+import com.gui.dtos.BasePageResponse;
 import com.gui.system.domain.UserDO;
 import com.gui.system.service.SessionService;
+import com.gui.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 import com.gui.common.service.DictService;
 import com.gui.common.utils.DateUtils;
-import com.gui.common.utils.PageUtils;
 import com.gui.oa.dao.NotifyDao;
 import com.gui.oa.dao.NotifyRecordDao;
 import com.gui.oa.domain.NotifyDO;
@@ -115,14 +116,13 @@ public class NotifyServiceImpl implements NotifyService {
 
 
     @Override
-    public PageUtils selfList(Map<String, Object> map) {
+    public BasePageResponse selfList(Map<String, Object> map) {
         List<NotifyDTO> rows = notifyDao.listDTO(map);
         for (NotifyDTO notifyDTO : rows) {
             notifyDTO.setBefore(DateUtils.getTimeBefore(notifyDTO.getUpdateDate()));
             notifyDTO.setSender(userDao.get(notifyDTO.getCreateBy()).getName());
         }
-        PageUtils page = new PageUtils(rows, notifyDao.countDTO(map));
-        return page;
+        return ResponseUtils.buildPageSuccess(notifyDao.countDTO(map),rows);
     }
 
 }

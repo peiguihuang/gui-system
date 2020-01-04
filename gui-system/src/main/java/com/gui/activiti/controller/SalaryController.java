@@ -5,9 +5,9 @@ import com.gui.activiti.service.SalaryService;
 import com.gui.activiti.utils.ActivitiUtils;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
-import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
 import com.gui.common.utils.ShiroUtils;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +42,11 @@ public class SalaryController extends BaseController{
 
     @ResponseBody
     @GetMapping("/list")
-    public PageUtils list(@RequestParam Map<String, Object> params) {
+    public BasePageResponse list(@RequestParam Map<String, Object> params) {
         Query query = new Query(params);
         List<SalaryDO> salaryList = salaryService.list(query);
         int total = salaryService.count(query);
-        PageUtils pageUtils = new PageUtils(salaryList, total);
-        return pageUtils;
+        return ResponseUtils.buildPageSuccess(total,salaryList);
     }
 
     @GetMapping("/form")

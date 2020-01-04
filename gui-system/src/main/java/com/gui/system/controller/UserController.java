@@ -6,6 +6,7 @@ import com.gui.common.controller.BaseController;
 import com.gui.common.domain.Tree;
 import com.gui.common.service.DictService;
 import com.gui.common.utils.*;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.system.domain.DeptDO;
 import com.gui.system.domain.RoleDO;
@@ -47,13 +48,12 @@ public class UserController extends BaseController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	PageUtils list(@RequestParam Map<String, Object> params) {
+	BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
 		List<UserDO> sysUserList = userService.list(query);
 		int total = userService.count(query);
-		PageUtils pageUtil = new PageUtils(sysUserList, total);
-		return pageUtil;
+		return ResponseUtils.buildPageSuccess(total,sysUserList);
 	}
 
 	@RequiresPermissions("sys:user:add")

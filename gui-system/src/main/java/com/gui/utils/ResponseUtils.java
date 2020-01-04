@@ -3,8 +3,11 @@ package com.gui.utils;
 
 
 import com.gui.constants.ErrorCode;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
+import com.sun.corba.se.impl.oa.toa.TOA;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -87,5 +90,12 @@ public class ResponseUtils {
         return response;
     }
 
-
+    public static BasePageResponse buildPageSuccess(Integer total, List<?> rows) {
+        BasePageResponse response = new BasePageResponse();
+        response.setCode(ErrorCode.SUCCESS.getErrorCode());
+        response.setMsg(ErrorCode.SUCCESS.getErrorMsg());
+        response.setTotal(total);
+        response.setRows(rows);
+        return response;
+    }
 }

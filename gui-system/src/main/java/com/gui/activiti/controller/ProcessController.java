@@ -4,7 +4,7 @@ import com.gui.activiti.service.ProcessService;
 import com.gui.activiti.vo.ProcessVO;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
-import com.gui.common.utils.PageUtils;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.utils.ResponseUtils;
 import org.activiti.engine.ActivitiException;
@@ -47,7 +47,7 @@ public class ProcessController extends BaseController{
     }
 
     @GetMapping("list")
-    PageUtils list(int offset, int limit) {
+    BasePageResponse list(int offset, int limit) {
         List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
                 .listPage(offset, limit);
         int count = (int) repositoryService.createProcessDefinitionQuery().count();
@@ -55,8 +55,8 @@ public class ProcessController extends BaseController{
         for(ProcessDefinition processDefinition: processDefinitions){
             list.add(new ProcessVO(processDefinition));
         }
-        PageUtils pageUtils = new PageUtils(list, count);
-        return pageUtils;
+
+        return ResponseUtils.buildPageSuccess(count,list);
     }
 
     @GetMapping("/add")

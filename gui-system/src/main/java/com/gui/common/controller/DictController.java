@@ -3,8 +3,8 @@ package com.gui.common.controller;
 import com.gui.common.config.Constant;
 import com.gui.common.domain.DictDO;
 import com.gui.common.service.DictService;
-import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
+import com.gui.dtos.BasePageResponse;
 import com.gui.dtos.BaseResponse;
 import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -39,13 +39,12 @@ public class DictController extends BaseController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("common:dict:dict")
-	public PageUtils list(@RequestParam Map<String, Object> params) {
+	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
 		List<DictDO> dictList = dictService.list(query);
 		int total = dictService.count(query);
-		PageUtils pageUtils = new PageUtils(dictList, total);
-		return pageUtils;
+		return ResponseUtils.buildPageSuccess(total,dictList);
 	}
 
 	@GetMapping("/add")
