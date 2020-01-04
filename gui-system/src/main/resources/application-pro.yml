@@ -8,12 +8,12 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/gui?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/hbst_db?useUnicode=true&characterEncoding=utf8
     username: root
-    password: root
-    initialSize: 1
-    minIdle: 3
-    maxActive: 20
+    password: Smart123
+    initialSize: 3
+    minIdle: 9
+    maxActive: 30
     # 配置获取连接等待超时的时间
     maxWait: 60000
     # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
