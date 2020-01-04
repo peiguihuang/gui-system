@@ -6,14 +6,17 @@ import com.gui.common.controller.BaseController;
 import com.gui.common.domain.Tree;
 import com.gui.common.service.DictService;
 import com.gui.common.utils.*;
+import com.gui.dtos.BaseResponse;
 import com.gui.system.domain.DeptDO;
 import com.gui.system.domain.RoleDO;
 import com.gui.system.domain.UserDO;
 import com.gui.system.service.RoleService;
 import com.gui.system.service.UserService;
+import com.gui.system.vo.UserImgVO;
 import com.gui.system.vo.UserVO;
 import javax.servlet.http.HttpServletRequest;
 
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequestMapping("/sys/user")
 @Controller
@@ -76,29 +80,29 @@ public class UserController extends BaseController {
 	@Log("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(UserDO user) {
+	BaseResponse<Void> save(UserDO user) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		if (userService.save(user) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	@RequiresPermissions("sys:user:edit")
 	@Log("更新用户")
 	@PostMapping("/update")
 	@ResponseBody
-	R update(UserDO user) {
+	BaseResponse<Void> update(UserDO user) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (userService.update(user) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 
@@ -106,14 +110,14 @@ public class UserController extends BaseController {
 	@Log("更新用户")
 	@PostMapping("/updatePeronal")
 	@ResponseBody
-	R updatePeronal(UserDO user) {
+	BaseResponse<Void> updatePeronal(UserDO user) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (userService.updatePersonal(user) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 
@@ -121,29 +125,29 @@ public class UserController extends BaseController {
 	@Log("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
-	R remove(Long id) {
+	BaseResponse<Void> remove(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (userService.remove(id) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	@RequiresPermissions("sys:user:batchRemove")
 	@Log("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	R batchRemove(@RequestParam("ids[]") Long[] userIds) {
+	BaseResponse<Void> batchRemove(@RequestParam("ids[]") Long[] userIds) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		int r = userService.batchremove(userIds);
 		if (r > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	@PostMapping("/exit")
@@ -167,15 +171,15 @@ public class UserController extends BaseController {
 	@Log("提交更改用户密码")
 	@PostMapping("/resetPwd")
 	@ResponseBody
-	R resetPwd(UserVO userVO) {
+	BaseResponse<Void> resetPwd(UserVO userVO) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		try{
 			userService.resetPwd(userVO,getUser());
-			return R.ok();
+			return ResponseUtils.success();
 		}catch (Exception e){
-			return R.error(1,e.getMessage());
+			return ResponseUtils.fail(1,e.getMessage());
 		}
 
 	}
@@ -183,15 +187,15 @@ public class UserController extends BaseController {
 	@Log("admin提交更改用户密码")
 	@PostMapping("/adminResetPwd")
 	@ResponseBody
-	R adminResetPwd(UserVO userVO) {
+	BaseResponse<Void> adminResetPwd(UserVO userVO) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		try{
 			userService.adminResetPwd(userVO);
-			return R.ok();
+			return ResponseUtils.success();
 		}catch (Exception e){
-			return R.error(1,e.getMessage());
+			return ResponseUtils.fail(1,e.getMessage());
 		}
 
 	}
@@ -218,20 +222,20 @@ public class UserController extends BaseController {
 	}
 	@ResponseBody
 	@PostMapping("/uploadImg")
-	R uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request) {
+	BaseResponse<UserImgVO> uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request) {
 		if ("test".equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		Map<String, Object> result = new HashMap<>();
+		UserImgVO result;
 		try {
 			result = userService.updatePersonalImg(file, avatar_data, getUserId());
 		} catch (Exception e) {
-			return R.error("更新图像失败！");
+			return ResponseUtils.fail("更新图像失败！");
 		}
-		if(result!=null && result.size()>0){
-			return R.ok(result);
+		if(Objects.nonNull(result)){
+			return ResponseUtils.success(result);
 		}else {
-			return R.error("更新图像失败！");
+			return ResponseUtils.fail("更新图像失败！");
 		}
 	}
 }

@@ -6,7 +6,8 @@ import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
 import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,9 +68,9 @@ public class ContentController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("blog:bContent:add")
 	@PostMapping("/save")
-	public R save(ContentDO bContent) {
+	public BaseResponse<Long> save(ContentDO bContent) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (bContent.getAllowComment() == null) {
 			bContent.setAllowComment(0);
@@ -89,9 +90,9 @@ public class ContentController extends BaseController {
 			count = bContentService.update(bContent);
 		}
 		if (count > 0) {
-			return R.ok().put("cid", bContent.getCid());
+			return ResponseUtils.success(bContent.getCid());
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -100,13 +101,13 @@ public class ContentController extends BaseController {
 	@RequiresPermissions("blog:bContent:edit")
 	@ResponseBody
 	@RequestMapping("/update")
-	public R update( ContentDO bContent) {
+	public BaseResponse<Void> update( ContentDO bContent) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		bContent.setGtmCreate(new Date());
 		bContentService.update(bContent);
-		return R.ok();
+		return ResponseUtils.success();
 	}
 
 	/**
@@ -115,14 +116,14 @@ public class ContentController extends BaseController {
 	@RequiresPermissions("blog:bContent:remove")
 	@PostMapping("/remove")
 	@ResponseBody
-	public R remove(Long id) {
+	public BaseResponse<Void> remove(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (bContentService.remove(id) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -131,11 +132,11 @@ public class ContentController extends BaseController {
 	@RequiresPermissions("blog:bContent:batchRemove")
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	public R remove(@RequestParam("ids[]") Long[] cids) {
+	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] cids) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		bContentService.batchRemove(cids);
-		return R.ok();
+		return ResponseUtils.success();
 	}
 }

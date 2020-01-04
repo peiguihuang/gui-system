@@ -6,10 +6,11 @@ import com.gui.common.domain.FileDO;
 import com.gui.common.domain.Tree;
 import com.gui.common.service.FileService;
 import com.gui.common.utils.MD5Utils;
-import com.gui.common.utils.R;
 import com.gui.common.utils.ShiroUtils;
+import com.gui.dtos.BaseResponse;
 import com.gui.system.domain.MenuDO;
 import com.gui.system.service.MenuService;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -67,16 +68,16 @@ public class LoginController extends BaseController {
 	@Log("登录")
 	@PostMapping("/login")
 	@ResponseBody
-	R ajaxLogin(String username, String password) {
+	BaseResponse<Void> ajaxLogin(String username, String password) {
 
 		password = MD5Utils.encrypt(username, password);
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
-			return R.ok();
+			return ResponseUtils.success();
 		} catch (AuthenticationException e) {
-			return R.error("用户或密码错误");
+			return ResponseUtils.fail("用户或密码错误");
 		}
 	}
 

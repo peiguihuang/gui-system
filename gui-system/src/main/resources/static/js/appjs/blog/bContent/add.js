@@ -35,7 +35,7 @@ function save(status) {
 			if (r.code == 0) {
 				parent.layer.msg(r.msg);
 				parent.reLoad();
-				$("#cid").val(r.cid);
+				$("#cid").val(r.data);
 
 			} else {
 				parent.layer.alert(r.msg)

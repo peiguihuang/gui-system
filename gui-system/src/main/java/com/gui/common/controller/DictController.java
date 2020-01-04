@@ -5,7 +5,8 @@ import com.gui.common.domain.DictDO;
 import com.gui.common.service.DictService;
 import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,14 +68,14 @@ public class DictController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("common:dict:add")
-	public R save(DictDO dict) {
+	public BaseResponse<Void> save(DictDO dict) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (dictService.save(dict) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -83,12 +84,12 @@ public class DictController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("common:dict:edit")
-	public R update(DictDO dict) {
+	public BaseResponse<Void> update(DictDO dict) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		dictService.update(dict);
-		return R.ok();
+		return ResponseUtils.success();
 	}
 
 	/**
@@ -97,14 +98,14 @@ public class DictController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	@RequiresPermissions("common:dict:remove")
-	public R remove(Long id) {
+	public BaseResponse<Void> remove(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (dictService.remove(id) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -113,12 +114,12 @@ public class DictController extends BaseController {
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	@RequiresPermissions("common:dict:batchRemove")
-	public R remove(@RequestParam("ids[]") Long[] ids) {
+	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] ids) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		dictService.batchRemove(ids);
-		return R.ok();
+		return ResponseUtils.success();
 	}
 
 	@GetMapping("/type")

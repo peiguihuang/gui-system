@@ -3,9 +3,10 @@ package com.gui.system.controller;
 import com.gui.common.annotation.Log;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
 import com.gui.system.domain.RoleDO;
 import com.gui.system.service.RoleService;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,14 +56,14 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:add")
 	@PostMapping("/save")
 	@ResponseBody()
-	R save(RoleDO role) {
+	BaseResponse<Void> save(RoleDO role) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.save(role) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		} else {
-			return R.error(1, "保存失败");
+			return ResponseUtils.fail(1, "保存失败");
 		}
 	}
 
@@ -70,14 +71,14 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@PostMapping("/update")
 	@ResponseBody()
-	R update(RoleDO role) {
+	BaseResponse<Void> update(RoleDO role) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.update(role) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		} else {
-			return R.error(1, "保存失败");
+			return ResponseUtils.fail(1, "保存失败");
 		}
 	}
 
@@ -85,14 +86,14 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:remove")
 	@PostMapping("/remove")
 	@ResponseBody()
-	R save(Long id) {
+	BaseResponse<Void> save(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (roleService.remove(id) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		} else {
-			return R.error(1, "删除失败");
+			return ResponseUtils.fail(1, "删除失败");
 		}
 	}
 	
@@ -100,14 +101,14 @@ public class RoleController extends BaseController {
 	@Log("批量删除角色")
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	R batchRemove(@RequestParam("ids[]") Long[] ids) {
+	BaseResponse<Void> batchRemove(@RequestParam("ids[]") Long[] ids) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		int r = roleService.batchremove(ids);
 		if (r > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 }

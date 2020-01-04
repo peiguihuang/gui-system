@@ -4,9 +4,10 @@ import com.gui.common.annotation.Log;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
 import com.gui.common.domain.Tree;
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
 import com.gui.system.domain.MenuDO;
 import com.gui.system.service.MenuService;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,14 +74,14 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:add")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(MenuDO menu) {
+	BaseResponse<Void> save(MenuDO menu) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (menuService.save(menu) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		} else {
-			return R.error(1, "保存失败");
+			return ResponseUtils.fail(1, "保存失败");
 		}
 	}
 
@@ -88,14 +89,14 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:edit")
 	@PostMapping("/update")
 	@ResponseBody
-	R update(MenuDO menu) {
+	BaseResponse<Void> update(MenuDO menu) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (menuService.update(menu) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		} else {
-			return R.error(1, "更新失败");
+			return ResponseUtils.fail(1, "更新失败");
 		}
 	}
 
@@ -103,14 +104,14 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:remove")
 	@PostMapping("/remove")
 	@ResponseBody
-	R remove(Long id) {
+	BaseResponse<Void> remove(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (menuService.remove(id) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		} else {
-			return R.error(1, "删除失败");
+			return ResponseUtils.fail(1, "删除失败");
 		}
 	}
 

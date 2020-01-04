@@ -1,7 +1,8 @@
 package com.gui.common.exception;
 
 
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,17 +42,17 @@ public class MainsiteErrorController implements ErrorController {
     }
 
     @RequestMapping(value = ERROR_PATH)
-    public R handleError(HttpServletRequest request, HttpServletResponse response) {
+    public BaseResponse<Void> handleError(HttpServletRequest request, HttpServletResponse response) {
         response.setStatus(200);
         int code = response.getStatus();
         if (404 == code) {
-            return R.error(404, "未找到资源");
+            return ResponseUtils.fail(404, "未找到资源");
         } else if (403 == code) {
-            return R.error(403, "没有访问权限");
+            return ResponseUtils.fail(403, "没有访问权限");
         } else if (401 == code) {
-            return R.error(403, "登录过期");
+            return ResponseUtils.fail(403, "登录过期");
         } else {
-            return R.error(500, "服务器错误");
+            return ResponseUtils.fail(500, "服务器错误");
         }
     }
 

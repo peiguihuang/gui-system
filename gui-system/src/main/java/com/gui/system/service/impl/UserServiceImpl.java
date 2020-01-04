@@ -8,6 +8,7 @@ import com.gui.common.config.GuiConfig;
 import com.gui.common.domain.FileDO;
 import com.gui.common.service.FileService;
 import com.gui.common.utils.*;
+import com.gui.system.vo.UserImgVO;
 import com.gui.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
@@ -199,7 +200,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception {
+    public UserImgVO updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception {
         String fileName = file.getOriginalFilename();
         fileName = FileUtil.renameToUUID(fileName);
         FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
@@ -227,16 +228,16 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new Exception("图片裁剪错误！！");
         }
-        Map<String, Object> result = new HashMap<>();
+        UserImgVO userImgVO = new UserImgVO();
         if (sysFileService.save(sysFile) > 0) {
             UserDO userDO = new UserDO();
             userDO.setUserId(userId);
             userDO.setPicId(sysFile.getId());
             if (userMapper.update(userDO) > 0) {
-                result.put("url", sysFile.getUrl());
+                userImgVO.setUrl(sysFile.getUrl());
             }
         }
-        return result;
+        return userImgVO;
     }
 
 }

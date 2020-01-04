@@ -3,6 +3,8 @@ package com.gui.system.controller;
 import java.util.Collection;
 import java.util.List;
 
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gui.common.utils.R;
 import com.gui.system.domain.UserOnline;
 import com.gui.system.service.SessionService;
 
@@ -35,13 +36,13 @@ public class SessionController {
 
 	@ResponseBody
 	@RequestMapping("/forceLogout/{sessionId}")
-	public R forceLogout(@PathVariable("sessionId") String sessionId, RedirectAttributes redirectAttributes) {
+	public BaseResponse<Void> forceLogout(@PathVariable("sessionId") String sessionId, RedirectAttributes redirectAttributes) {
 		try {
 			sessionService.forceLogout(sessionId);
-			return R.ok();
+			return ResponseUtils.success();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return R.error();
+			return ResponseUtils.fail();
 		}
 
 	}

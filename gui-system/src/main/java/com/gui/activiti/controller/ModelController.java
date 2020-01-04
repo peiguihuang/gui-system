@@ -3,10 +3,11 @@ package com.gui.activiti.controller;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
 import com.gui.common.utils.PageUtils;
-import com.gui.common.utils.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
@@ -146,32 +147,32 @@ public class ModelController extends BaseController{
     }
 
     @DeleteMapping("/model/{id}")
-    public R remove(@PathVariable("id") String id) {
+    public BaseResponse<Void> remove(@PathVariable("id") String id) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         repositoryService.deleteModel(id);
-        return R.ok();
+        return ResponseUtils.success();
     }
 
     @PostMapping("/model/deploy/{id}")
-    public R deploy(@PathVariable("id") String id) throws Exception {
+    public BaseResponse<Void> deploy(@PathVariable("id") String id) throws Exception {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         //获取模型
         Model modelData = repositoryService.getModel(id);
         byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
 
         if (bytes == null) {
-            return R.error("模型数据为空，请先设计流程并成功保存，再进行发布。");
+            return ResponseUtils.fail("模型数据为空，请先设计流程并成功保存，再进行发布。");
         }
 
         JsonNode modelNode = new ObjectMapper().readTree(bytes);
 
         BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         if (model.getProcesses().size() == 0) {
-            return R.error("数据模型不符要求，请至少设计一条主线流程。");
+            return ResponseUtils.fail("数据模型不符要求，请至少设计一条主线流程。");
         }
         byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
 
@@ -184,18 +185,18 @@ public class ModelController extends BaseController{
         modelData.setDeploymentId(deployment.getId());
         repositoryService.saveModel(modelData);
 
-        return R.ok();
+        return ResponseUtils.success();
     }
 
     @PostMapping("/model/batchRemove")
-    public R batchRemove(@RequestParam("ids[]") String[] ids) {
+    public BaseResponse<Void> batchRemove(@RequestParam("ids[]") String[] ids) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         for (String id : ids) {
             repositoryService.deleteModel(id);
         }
-        return R.ok();
+        return ResponseUtils.success();
     }
 
     @RequestMapping(value = "/model/{modelId}/save", method = RequestMethod.PUT)

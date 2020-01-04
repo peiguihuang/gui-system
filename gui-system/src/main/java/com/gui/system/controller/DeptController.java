@@ -3,9 +3,10 @@ package com.gui.system.controller;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
 import com.gui.common.domain.Tree;
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
 import com.gui.system.domain.DeptDO;
 import com.gui.system.service.DeptService;
+import com.gui.utils.ResponseUtils;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,14 +81,14 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("system:sysDept:add")
-	public R save(DeptDO sysDept) {
+	public BaseResponse<Void> save(DeptDO sysDept) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (sysDeptService.save(sysDept) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -96,14 +97,14 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("system:sysDept:edit")
-	public R update(DeptDO sysDept) {
+	public BaseResponse<Void> update(DeptDO sysDept) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (sysDeptService.update(sysDept) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -112,23 +113,23 @@ public class DeptController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	@RequiresPermissions("system:sysDept:remove")
-	public R remove(Long deptId) {
+	public BaseResponse<Void> remove(Long deptId) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("parentId", deptId);
 		if(sysDeptService.count(map)>0) {
-			return R.error(1, "包含下级部门,不允许修改");
+			return ResponseUtils.fail(1, "包含下级部门,不允许修改");
 		}
 		if(sysDeptService.checkDeptHasUser(deptId)) {
 			if (sysDeptService.remove(deptId) > 0) {
-				return R.ok();
+				return ResponseUtils.success();
 			}
 		}else {
-			return R.error(1, "部门包含用户,不允许修改");
+			return ResponseUtils.fail(1, "部门包含用户,不允许修改");
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -137,12 +138,12 @@ public class DeptController extends BaseController {
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	@RequiresPermissions("system:sysDept:batchRemove")
-	public R remove(@RequestParam("ids[]") Long[] deptIds) {
+	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] deptIds) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		sysDeptService.batchRemove(deptIds);
-		return R.ok();
+		return ResponseUtils.success();
 	}
 
 	@GetMapping("/tree")

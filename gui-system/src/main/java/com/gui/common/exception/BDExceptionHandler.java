@@ -4,9 +4,9 @@ import com.gui.common.config.Constant;
 import com.gui.common.domain.LogDO;
 import com.gui.common.service.LogService;
 import com.gui.common.utils.HttpServletUtils;
-import com.gui.common.utils.R;
 import com.gui.common.utils.ShiroUtils;
 import com.gui.system.domain.UserDO;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,20 +42,20 @@ public class BDExceptionHandler {
 //    @ExceptionHandler(DuplicateKeyException.class)
 //    public R handleDuplicateKeyException(DuplicateKeyException e) {
 //        logger.error(e.getMessage(), e);
-//        return R.error("数据库中已存在该记录");
+//        return ResponseUtils.fail("数据库中已存在该记录");
 //    }
 //
 //    @ExceptionHandler(org.springframework.web.servlet.NoHandlerFoundException.class)
 //    public R noHandlerFoundException(org.springframework.web.servlet.NoHandlerFoundException e) {
 //        logger.error(e.getMessage(), e);
-//        return R.error(404, "没找找到页面");
+//        return ResponseUtils.fail(404, "没找找到页面");
 //    }
 
     @ExceptionHandler(AuthorizationException.class)
     public Object handleAuthorizationException(AuthorizationException e, HttpServletRequest request) {
         logger.error(e.getMessage(), e);
         if (HttpServletUtils.jsAjax(request)) {
-            return R.error(403, "未授权");
+            return ResponseUtils.fail(403, "未授权");
         }
         return new ModelAndView("error/403");
     }
@@ -76,7 +76,7 @@ public class BDExceptionHandler {
         logService.save(logDO);
         logger.error(e.getMessage(), e);
         if (HttpServletUtils.jsAjax(request)) {
-            return R.error(500, "服务器错误，请联系管理员");
+            return ResponseUtils.fail(500, "服务器错误，请联系管理员");
         }
         return new ModelAndView("error/500");
     }

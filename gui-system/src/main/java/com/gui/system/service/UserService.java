@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.gui.system.vo.UserImgVO;
 import com.gui.system.vo.UserVO;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +51,5 @@ public interface UserService {
 	 * @param userId 用户ID
 	 * @throws Exception
 	 */
-    Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception;
+	UserImgVO updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception;
 }

@@ -2,6 +2,8 @@ package com.gui.common.controller;
 
 import java.util.Map;
 
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +16,6 @@ import com.gui.common.domain.LogDO;
 import com.gui.common.domain.PageDO;
 import com.gui.common.service.LogService;
 import com.gui.common.utils.Query;
-import com.gui.common.utils.R;
 
 @RequestMapping("/common/log")
 @Controller
@@ -38,20 +39,20 @@ public class LogController {
 	
 	@ResponseBody
 	@PostMapping("/remove")
-	R remove(Long id) {
+	BaseResponse<Void> remove(Long id) {
 		if (logService.remove(id)>0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	@ResponseBody
 	@PostMapping("/batchRemove")
-	R batchRemove(@RequestParam("ids[]") Long[] ids) {
+	BaseResponse<Void> batchRemove(@RequestParam("ids[]") Long[] ids) {
 		int r = logService.batchRemove(ids);
 		if (r > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 }

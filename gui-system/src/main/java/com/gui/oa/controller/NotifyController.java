@@ -6,11 +6,12 @@ import com.gui.common.domain.DictDO;
 import com.gui.common.service.DictService;
 import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
 import com.gui.oa.domain.NotifyDO;
 import com.gui.oa.domain.NotifyRecordDO;
 import com.gui.oa.service.NotifyRecordService;
 import com.gui.oa.service.NotifyService;
+import com.gui.utils.ResponseUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,15 +87,15 @@ public class NotifyController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("oa:notify:add")
-	public R save(NotifyDO notify) {
+	public BaseResponse<Void> save(NotifyDO notify) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		notify.setCreateBy(getUserId());
 		if (notifyService.save(notify) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -103,12 +104,12 @@ public class NotifyController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("oa:notify:edit")
-	public R update(NotifyDO notify) {
+	public BaseResponse<Void> update(NotifyDO notify) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		notifyService.update(notify);
-		return R.ok();
+		return ResponseUtils.success();
 	}
 
 	/**
@@ -117,14 +118,14 @@ public class NotifyController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	@RequiresPermissions("oa:notify:remove")
-	public R remove(Long id) {
+	public BaseResponse<Void> remove(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (notifyService.remove(id) > 0) {
-			return R.ok();
+			return ResponseUtils.success();
 		}
-		return R.error();
+		return ResponseUtils.fail();
 	}
 
 	/**
@@ -133,12 +134,12 @@ public class NotifyController extends BaseController {
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	@RequiresPermissions("oa:notify:batchRemove")
-	public R remove(@RequestParam("ids[]") Long[] ids) {
+	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] ids) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		notifyService.batchRemove(ids);
-		return R.ok();
+		return ResponseUtils.success();
 	}
 
 	@ResponseBody

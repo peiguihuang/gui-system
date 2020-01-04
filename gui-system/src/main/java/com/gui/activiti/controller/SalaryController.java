@@ -7,8 +7,9 @@ import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
 import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
-import com.gui.common.utils.R;
 import com.gui.common.utils.ShiroUtils;
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,9 +68,9 @@ public class SalaryController extends BaseController{
      */
     @ResponseBody
     @PostMapping("/save")
-    public R saveOrUpdate(SalaryDO salary) {
+    public BaseResponse<Void> saveOrUpdate(SalaryDO salary) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         salary.setCreateDate(new Date());
         salary.setUpdateDate(new Date());
@@ -77,9 +78,9 @@ public class SalaryController extends BaseController{
         salary.setUpdateBy(ShiroUtils.getUserId().toString());
         salary.setDelFlag("1");
         if (salaryService.save(salary) > 0) {
-            return R.ok();
+            return ResponseUtils.success();
         }
-        return R.error();
+        return ResponseUtils.fail();
     }
 
     /**
@@ -87,9 +88,9 @@ public class SalaryController extends BaseController{
      */
     @ResponseBody
     @RequestMapping("/update")
-    public R update(SalaryDO salary) {
+    public BaseResponse<Void> update(SalaryDO salary) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         String taskKey = activitiUtils.getTaskByTaskId(salary.getTaskId()).getTaskDefinitionKey();
         if ("audit2".equals(taskKey)) {
@@ -102,7 +103,7 @@ public class SalaryController extends BaseController{
             //流程完成，兑现
         }
         salaryService.update(salary);
-        return R.ok();
+        return ResponseUtils.success();
     }
 
     /**
@@ -110,14 +111,14 @@ public class SalaryController extends BaseController{
      */
     @PostMapping("/remove")
     @ResponseBody
-    public R remove(String id) {
+    public BaseResponse<Void> remove(String id) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         if (salaryService.remove(id) > 0) {
-            return R.ok();
+            return ResponseUtils.success();
         }
-        return R.error();
+        return ResponseUtils.fail();
     }
 
     /**
@@ -125,12 +126,12 @@ public class SalaryController extends BaseController{
      */
     @PostMapping("/batchRemove")
     @ResponseBody
-    public R remove(@RequestParam("ids[]") String[] ids) {
+    public BaseResponse<Void> remove(@RequestParam("ids[]") String[] ids) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         salaryService.batchRemove(ids);
-        return R.ok();
+        return ResponseUtils.success();
     }
 
 }

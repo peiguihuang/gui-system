@@ -17,7 +17,6 @@ import ${package}.domain.${className}DO;
 import ${package}.service.${className}Service;
 import com.gui.common.utils.PageUtils;
 import com.gui.common.utils.Query;
-import com.gui.common.utils.R;
 
 /**
  * ${comments}

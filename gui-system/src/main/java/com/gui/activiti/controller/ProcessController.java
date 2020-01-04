@@ -5,7 +5,8 @@ import com.gui.activiti.vo.ProcessVO;
 import com.gui.common.config.Constant;
 import com.gui.common.controller.BaseController;
 import com.gui.common.utils.PageUtils;
-import com.gui.common.utils.R;
+import com.gui.dtos.BaseResponse;
+import com.gui.utils.ResponseUtils;
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -65,9 +66,9 @@ public class ProcessController extends BaseController{
 
     @PostMapping("/save")
     @Transactional(readOnly = false)
-    public R deploy(String exportDir, String category, MultipartFile file) {
+    public BaseResponse<Void> deploy(String exportDir, String category, MultipartFile file) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         String message = "";
         String fileName = file.getOriginalFilename();
@@ -105,7 +106,7 @@ public class ProcessController extends BaseController{
         } catch (Exception e) {
             throw new ActivitiException("部署失败！", e);
         }
-        return R.ok(message);
+        return ResponseUtils.success(message);
     }
 
     /**
@@ -118,17 +119,17 @@ public class ProcessController extends BaseController{
      * @throws XMLStreamException
      */
     @RequestMapping(value = "/convertToModel/{procDefId}")
-    public R convertToModel(@PathVariable("procDefId") String procDefId, RedirectAttributes redirectAttributes) throws UnsupportedEncodingException, XMLStreamException {
+    public BaseResponse<String> convertToModel(@PathVariable("procDefId") String procDefId, RedirectAttributes redirectAttributes) throws UnsupportedEncodingException, XMLStreamException {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         org.activiti.engine.repository.Model modelData = null;
         try {
             modelData = processService.convertToModel(procDefId);
-            return R.ok( "转换模型成功，模型ID=" + modelData.getId());
+            return ResponseUtils.success( "转换模型成功，模型ID=" + modelData.getId());
         } catch (Exception e) {
             e.printStackTrace();
-            return R.ok( "转换模型失败");
+            return ResponseUtils.fail( "转换模型失败");
         }
 
     }
@@ -144,21 +145,21 @@ public class ProcessController extends BaseController{
     }
 
     @PostMapping("/remove")
-    public R remove(String id){
+    public BaseResponse<Void> remove(String id){
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         repositoryService.deleteDeployment(id,true);
-        return R.ok();
+        return ResponseUtils.success();
     }
     @PostMapping("/batchRemove")
-    public R batchRemove(@RequestParam("ids[]") String[] ids) {
+    public BaseResponse<Void> batchRemove(@RequestParam("ids[]") String[] ids) {
         if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+            return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
         }
         for (String id : ids) {
             repositoryService.deleteDeployment(id,true);
         }
-        return R.ok();
+        return ResponseUtils.success();
     }
 }
