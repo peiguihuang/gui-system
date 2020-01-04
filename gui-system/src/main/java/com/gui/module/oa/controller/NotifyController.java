@@ -4,6 +4,7 @@ import com.gui.base.BaseController;
 import com.gui.base.BasePageResponse;
 import com.gui.base.BaseResponse;
 import com.gui.base.Constant;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.common.domain.DictDO;
 import com.gui.module.common.service.DictService;
 import com.gui.module.common.utils.Query;
@@ -42,14 +43,14 @@ public class NotifyController extends BaseController {
 	private DictService dictService;
 
 	@GetMapping()
-	@RequiresPermissions("oa:notify:notify")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.QUERY_NOTIFY_LIST)
 	String oaNotify() {
 		return "oa/notify/notify";
 	}
 
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("oa:notify:notify")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.QUERY_NOTIFY_LIST)
 	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -59,13 +60,13 @@ public class NotifyController extends BaseController {
 	}
 
 	@GetMapping("/add")
-	@RequiresPermissions("oa:notify:add")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.ADD_NOTIFY)
 	String add() {
 		return "oa/notify/add";
 	}
 
 	@GetMapping("/edit/{id}")
-	@RequiresPermissions("oa:notify:edit")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.EDIT_NOTIFY)
 	String edit(@PathVariable("id") Long id, Model model) {
 		NotifyDO notify = notifyService.get(id);
 		List<DictDO> dictDOS = dictService.listByType("oa_notify_type");
@@ -85,7 +86,7 @@ public class NotifyController extends BaseController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("oa:notify:add")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.ADD_NOTIFY)
 	public BaseResponse<Void> save(NotifyDO notify) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -102,7 +103,7 @@ public class NotifyController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("oa:notify:edit")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.EDIT_NOTIFY)
 	public BaseResponse<Void> update(NotifyDO notify) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -116,7 +117,7 @@ public class NotifyController extends BaseController {
 	 */
 	@PostMapping("/remove")
 	@ResponseBody
-	@RequiresPermissions("oa:notify:remove")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.REMOVE_NOTIFY)
 	public BaseResponse<Void> remove(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -132,7 +133,7 @@ public class NotifyController extends BaseController {
 	 */
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("oa:notify:batchRemove")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.BATCHREMOVE_NOTIFY)
 	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] ids) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -168,7 +169,7 @@ public class NotifyController extends BaseController {
 	}
 
 	@GetMapping("/read/{id}")
-	@RequiresPermissions("oa:notify:edit")
+	@RequiresPermissions(SecurityPermissionConstants.Oa.EDIT_NOTIFY)
 	String read(@PathVariable("id") Long id, Model model) {
 		NotifyDO notify = notifyService.get(id);
 		//更改阅读状态

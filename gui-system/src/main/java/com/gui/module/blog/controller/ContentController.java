@@ -4,6 +4,7 @@ import com.gui.base.BaseController;
 import com.gui.base.BasePageResponse;
 import com.gui.base.BaseResponse;
 import com.gui.base.Constant;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.blog.domain.ContentDO;
 import com.gui.module.blog.service.ContentService;
 import com.gui.module.common.utils.Query;
@@ -39,7 +40,7 @@ public class ContentController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("blog:bContent:bContent")
+	@RequiresPermissions(SecurityPermissionConstants.Blog.QUERY_BLOG_LIST)
 	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		List<ContentDO> bContentList = bContentService.list(query);
@@ -48,13 +49,13 @@ public class ContentController extends BaseController {
 	}
 
 	@GetMapping("/add")
-	@RequiresPermissions("blog:bContent:add")
+	@RequiresPermissions(SecurityPermissionConstants.Blog.ADD_BLOG)
 	String add() {
 		return "blog/bContent/add";
 	}
 
 	@GetMapping("/edit/{cid}")
-	@RequiresPermissions("blog:bContent:edit")
+	@RequiresPermissions(SecurityPermissionConstants.Blog.EDIT_BLOG)
 	String edit(@PathVariable("cid") Long cid, Model model) {
 		ContentDO bContentDO = bContentService.get(cid);
 		model.addAttribute("bContent", bContentDO);
@@ -65,7 +66,7 @@ public class ContentController extends BaseController {
 	 * 保存
 	 */
 	@ResponseBody
-	@RequiresPermissions("blog:bContent:add")
+	@RequiresPermissions(SecurityPermissionConstants.Blog.ADD_BLOG)
 	@PostMapping("/save")
 	public BaseResponse<Long> save(ContentDO bContent) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
@@ -97,7 +98,7 @@ public class ContentController extends BaseController {
 	/**
 	 * 修改
 	 */
-	@RequiresPermissions("blog:bContent:edit")
+	@RequiresPermissions(SecurityPermissionConstants.Blog.EDIT_BLOG)
 	@ResponseBody
 	@RequestMapping("/update")
 	public BaseResponse<Void> update( ContentDO bContent) {
@@ -112,7 +113,7 @@ public class ContentController extends BaseController {
 	/**
 	 * 删除
 	 */
-	@RequiresPermissions("blog:bContent:remove")
+	@RequiresPermissions(SecurityPermissionConstants.Blog.REMOVE_BLOG)
 	@PostMapping("/remove")
 	@ResponseBody
 	public BaseResponse<Void> remove(Long id) {
@@ -128,7 +129,7 @@ public class ContentController extends BaseController {
 	/**
 	 * 删除
 	 */
-	@RequiresPermissions("blog:bContent:batchRemove")
+	@RequiresPermissions(SecurityPermissionConstants.Blog.BATCHREMOVE_BLOG)
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] cids) {

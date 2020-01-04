@@ -4,6 +4,7 @@ import com.gui.base.BaseController;
 import com.gui.base.BasePageResponse;
 import com.gui.base.BaseResponse;
 import com.gui.base.Constant;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.common.domain.DictDO;
 import com.gui.module.common.service.DictService;
 import com.gui.module.common.utils.Query;
@@ -32,14 +33,14 @@ public class DictController extends BaseController {
 	private DictService dictService;
 
 	@GetMapping()
-	@RequiresPermissions("common:dict:dict")
+	@RequiresPermissions(SecurityPermissionConstants.Common.QUERY_DICT_LIST)
 	String dict() {
 		return "common/dict/dict";
 	}
 
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("common:dict:dict")
+	@RequiresPermissions(SecurityPermissionConstants.Common.QUERY_DICT_LIST)
 	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -49,13 +50,13 @@ public class DictController extends BaseController {
 	}
 
 	@GetMapping("/add")
-	@RequiresPermissions("common:dict:add")
+	@RequiresPermissions(SecurityPermissionConstants.Common.ADD_DICT)
 	String add() {
 		return "common/dict/add";
 	}
 
 	@GetMapping("/edit/{id}")
-	@RequiresPermissions("common:dict:edit")
+	@RequiresPermissions(SecurityPermissionConstants.Common.EDIT_DICT)
 	String edit(@PathVariable("id") Long id, Model model) {
 		DictDO dict = dictService.get(id);
 		model.addAttribute("dict", dict);
@@ -67,7 +68,7 @@ public class DictController extends BaseController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("common:dict:add")
+	@RequiresPermissions(SecurityPermissionConstants.Common.ADD_DICT)
 	public BaseResponse<Void> save(DictDO dict) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -83,7 +84,7 @@ public class DictController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("common:dict:edit")
+	@RequiresPermissions(SecurityPermissionConstants.Common.EDIT_DICT)
 	public BaseResponse<Void> update(DictDO dict) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -97,7 +98,7 @@ public class DictController extends BaseController {
 	 */
 	@PostMapping("/remove")
 	@ResponseBody
-	@RequiresPermissions("common:dict:remove")
+	@RequiresPermissions(SecurityPermissionConstants.Common.REMOVE_DICT)
 	public BaseResponse<Void> remove(Long id) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -113,7 +114,7 @@ public class DictController extends BaseController {
 	 */
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("common:dict:batchRemove")
+	@RequiresPermissions(SecurityPermissionConstants.Common.BATCHREMOVE_DICT)
 	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] ids) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -130,7 +131,7 @@ public class DictController extends BaseController {
 
 	// 类别已经指定增加
 	@GetMapping("/add/{type}/{description}")
-	@RequiresPermissions("common:dict:add")
+	@RequiresPermissions(SecurityPermissionConstants.Common.ADD_DICT)
 	String addD(Model model, @PathVariable("type") String type, @PathVariable("description") String description) {
 		model.addAttribute("type", type);
 		model.addAttribute("description", description);

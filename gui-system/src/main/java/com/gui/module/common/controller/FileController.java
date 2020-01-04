@@ -3,6 +3,7 @@ package com.gui.module.common.controller;
 import com.gui.base.BaseController;
 import com.gui.base.BasePageResponse;
 import com.gui.base.BaseResponse;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.common.config.GuiConfig;
 import com.gui.module.common.domain.FileDO;
 import com.gui.module.common.service.FileService;
@@ -41,7 +42,7 @@ public class FileController extends BaseController {
 	private GuiConfig guiConfig;
 
 	@GetMapping()
-	@RequiresPermissions("common:sysFile:sysFile")
+	@RequiresPermissions(SecurityPermissionConstants.Common.QUERY_FILE_LIST)
 	String sysFile(Model model) {
 		Map<String, Object> params = new HashMap<>(16);
 		return "common/file/file";
@@ -49,7 +50,7 @@ public class FileController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("common:sysFile:sysFile")
+	@RequiresPermissions(SecurityPermissionConstants.Common.QUERY_FILE_LIST)
 	public BasePageResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
@@ -59,13 +60,11 @@ public class FileController extends BaseController {
 	}
 
 	@GetMapping("/add")
-	// @RequiresPermissions("common:bComments")
 	String add() {
 		return "common/sysFile/add";
 	}
 
 	@GetMapping("/edit")
-	// @RequiresPermissions("common:bComments")
 	String edit(Long id, Model model) {
 		FileDO sysFile = sysFileService.get(id);
 		model.addAttribute("sysFile", sysFile);
@@ -76,7 +75,7 @@ public class FileController extends BaseController {
 	 * 信息
 	 */
 	@RequestMapping("/info/{id}")
-	@RequiresPermissions("common:info")
+	@RequiresPermissions(SecurityPermissionConstants.Common.COMMON_INFO)
 	public BaseResponse<FileDO> info(@PathVariable("id") Long id) {
 		FileDO sysFile = sysFileService.get(id);
 		return ResponseUtils.success(sysFile);
@@ -87,7 +86,7 @@ public class FileController extends BaseController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("common:save")
+	@RequiresPermissions(SecurityPermissionConstants.Common.COMMON_SAVE)
 	public BaseResponse<Void> save(FileDO sysFile) {
 		if (sysFileService.save(sysFile) > 0) {
 			return ResponseUtils.success();
@@ -99,7 +98,7 @@ public class FileController extends BaseController {
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	@RequiresPermissions("common:update")
+	@RequiresPermissions(SecurityPermissionConstants.Common.COMMON_UPDATE)
 	public BaseResponse<Void> update(@RequestBody FileDO sysFile) {
 		sysFileService.update(sysFile);
 
@@ -111,7 +110,6 @@ public class FileController extends BaseController {
 	 */
 	@PostMapping("/remove")
 	@ResponseBody
-	// @RequiresPermissions("common:remove")
 	public BaseResponse<Void> remove(Long id, HttpServletRequest request) {
 		if ("test".equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -133,7 +131,7 @@ public class FileController extends BaseController {
 	 */
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("common:remove")
+	@RequiresPermissions(SecurityPermissionConstants.Common.COMMON_REMOVE)
 	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] ids) {
 		if ("test".equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");

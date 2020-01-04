@@ -4,6 +4,7 @@ import com.gui.base.BaseController;
 import com.gui.base.BasePageResponse;
 import com.gui.base.BaseResponse;
 import com.gui.base.Constant;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.common.annotation.Log;
 import com.gui.module.common.domain.Tree;
 import com.gui.module.common.service.DictService;
@@ -39,7 +40,7 @@ public class UserController extends BaseController {
     RoleService roleService;
 	@Autowired
 	DictService dictService;
-	@RequiresPermissions("sys:user:user")
+	@RequiresPermissions(SecurityPermissionConstants.System.QUERY_USER_LIST)
 	@GetMapping("")
 	String user(Model model) {
 		return prefix + "/user";
@@ -55,7 +56,7 @@ public class UserController extends BaseController {
 		return ResponseUtils.buildPageSuccess(total,sysUserList);
 	}
 
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_USER)
 	@Log("添加用户")
 	@GetMapping("/add")
 	String add(Model model) {
@@ -64,7 +65,7 @@ public class UserController extends BaseController {
 		return prefix + "/add";
 	}
 
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_USER)
 	@Log("编辑用户")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
@@ -75,7 +76,7 @@ public class UserController extends BaseController {
 		return prefix+"/edit";
 	}
 
-	@RequiresPermissions("sys:user:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_USER)
 	@Log("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
@@ -90,7 +91,7 @@ public class UserController extends BaseController {
 		return ResponseUtils.fail();
 	}
 
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_USER)
 	@Log("更新用户")
 	@PostMapping("/update")
 	@ResponseBody
@@ -105,7 +106,7 @@ public class UserController extends BaseController {
 	}
 
 
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_USER)
 	@Log("更新用户")
 	@PostMapping("/updatePeronal")
 	@ResponseBody
@@ -120,7 +121,7 @@ public class UserController extends BaseController {
 	}
 
 
-	@RequiresPermissions("sys:user:remove")
+	@RequiresPermissions(SecurityPermissionConstants.System.REMOVE_USER)
 	@Log("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
@@ -134,7 +135,7 @@ public class UserController extends BaseController {
 		return ResponseUtils.fail();
 	}
 
-	@RequiresPermissions("sys:user:batchRemove")
+	@RequiresPermissions(SecurityPermissionConstants.System.BATCHREMOVE_USER)
 	@Log("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
@@ -156,7 +157,7 @@ public class UserController extends BaseController {
 		return !userService.exit(params);
 	}
 
-	@RequiresPermissions("sys:user:resetPwd")
+	@RequiresPermissions(SecurityPermissionConstants.System.USER_RESETPWD)
 	@Log("请求更改用户密码")
 	@GetMapping("/resetPwd/{id}")
 	String resetPwd(@PathVariable("id") Long userId, Model model) {
@@ -182,7 +183,7 @@ public class UserController extends BaseController {
 		}
 
 	}
-	@RequiresPermissions("sys:user:resetPwd")
+	@RequiresPermissions(SecurityPermissionConstants.System.USER_RESETPWD)
 	@Log("admin提交更改用户密码")
 	@PostMapping("/adminResetPwd")
 	@ResponseBody

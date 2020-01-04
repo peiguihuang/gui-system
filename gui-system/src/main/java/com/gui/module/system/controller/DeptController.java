@@ -3,6 +3,7 @@ package com.gui.module.system.controller;
 import com.gui.base.BaseController;
 import com.gui.base.BaseResponse;
 import com.gui.base.Constant;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.common.domain.Tree;
 import com.gui.module.system.domain.DeptDO;
 import com.gui.module.system.service.DeptService;
@@ -34,7 +35,7 @@ public class DeptController extends BaseController {
 	private DeptService sysDeptService;
 
 	@GetMapping()
-	@RequiresPermissions("system:sysDept:sysDept")
+	@RequiresPermissions(SecurityPermissionConstants.System.QUERY_DEPT_LIST)
 	String dept() {
 		return prefix + "/dept";
 	}
@@ -42,7 +43,7 @@ public class DeptController extends BaseController {
 	@ApiOperation(value="获取部门列表", notes="")
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("system:sysDept:sysDept")
+	@RequiresPermissions(SecurityPermissionConstants.System.QUERY_DEPT_LIST)
 	public List<DeptDO> list() {
 		Map<String, Object> query = new HashMap<>(16);
 		List<DeptDO> sysDeptList = sysDeptService.list(query);
@@ -50,7 +51,7 @@ public class DeptController extends BaseController {
 	}
 
 	@GetMapping("/add/{pId}")
-	@RequiresPermissions("system:sysDept:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_DEPT)
 	String add(@PathVariable("pId") Long pId, Model model) {
 		model.addAttribute("pId", pId);
 		if (pId == 0) {
@@ -62,7 +63,7 @@ public class DeptController extends BaseController {
 	}
 
 	@GetMapping("/edit/{deptId}")
-	@RequiresPermissions("system:sysDept:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_DEPT)
 	String edit(@PathVariable("deptId") Long deptId, Model model) {
 		DeptDO sysDept = sysDeptService.get(deptId);
 		model.addAttribute("sysDept", sysDept);
@@ -80,7 +81,7 @@ public class DeptController extends BaseController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("system:sysDept:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_DEPT)
 	public BaseResponse<Void> save(DeptDO sysDept) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -96,7 +97,7 @@ public class DeptController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("system:sysDept:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_DEPT)
 	public BaseResponse<Void> update(DeptDO sysDept) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -112,7 +113,7 @@ public class DeptController extends BaseController {
 	 */
 	@PostMapping("/remove")
 	@ResponseBody
-	@RequiresPermissions("system:sysDept:remove")
+	@RequiresPermissions(SecurityPermissionConstants.System.REMOVE_DEPT)
 	public BaseResponse<Void> remove(Long deptId) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");
@@ -137,7 +138,7 @@ public class DeptController extends BaseController {
 	 */
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("system:sysDept:batchRemove")
+	@RequiresPermissions(SecurityPermissionConstants.System.BATCHREMOVE_DEPT)
 	public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] deptIds) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return ResponseUtils.fail(1, "演示系统不允许修改,完整体验请部署程序");

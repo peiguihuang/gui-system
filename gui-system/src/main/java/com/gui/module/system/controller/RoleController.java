@@ -3,6 +3,7 @@ package com.gui.module.system.controller;
 import com.gui.base.BaseController;
 import com.gui.base.BaseResponse;
 import com.gui.base.Constant;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.common.annotation.Log;
 import com.gui.module.system.domain.RoleDO;
 import com.gui.module.system.service.RoleService;
@@ -22,13 +23,13 @@ public class RoleController extends BaseController {
 	@Autowired
     RoleService roleService;
 
-	@RequiresPermissions("sys:role:role")
+	@RequiresPermissions(SecurityPermissionConstants.System.QUERY_ROLE_LIST)
 	@GetMapping()
 	String role() {
 		return prefix + "/role";
 	}
 
-	@RequiresPermissions("sys:role:role")
+	@RequiresPermissions(SecurityPermissionConstants.System.QUERY_ROLE_LIST)
 	@GetMapping("/list")
 	@ResponseBody()
 	List<RoleDO> list() {
@@ -37,14 +38,14 @@ public class RoleController extends BaseController {
 	}
 
 	@Log("添加角色")
-	@RequiresPermissions("sys:role:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_ROLE)
 	@GetMapping("/add")
 	String add() {
 		return prefix + "/add";
 	}
 
 	@Log("编辑角色")
-	@RequiresPermissions("sys:role:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_ROLE)
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Long id, Model model) {
 		RoleDO roleDO = roleService.get(id);
@@ -53,7 +54,7 @@ public class RoleController extends BaseController {
 	}
 
 	@Log("保存角色")
-	@RequiresPermissions("sys:role:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_ROLE)
 	@PostMapping("/save")
 	@ResponseBody()
 	BaseResponse<Void> save(RoleDO role) {
@@ -68,7 +69,7 @@ public class RoleController extends BaseController {
 	}
 
 	@Log("更新角色")
-	@RequiresPermissions("sys:role:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_ROLE)
 	@PostMapping("/update")
 	@ResponseBody()
 	BaseResponse<Void> update(RoleDO role) {
@@ -83,7 +84,7 @@ public class RoleController extends BaseController {
 	}
 
 	@Log("删除角色")
-	@RequiresPermissions("sys:role:remove")
+	@RequiresPermissions(SecurityPermissionConstants.System.REMOVE_ROLE)
 	@PostMapping("/remove")
 	@ResponseBody()
 	BaseResponse<Void> save(Long id) {
@@ -97,7 +98,7 @@ public class RoleController extends BaseController {
 		}
 	}
 	
-	@RequiresPermissions("sys:role:batchRemove")
+	@RequiresPermissions(SecurityPermissionConstants.System.BATCHREMOVE_ROLE)
 	@Log("批量删除角色")
 	@PostMapping("/batchRemove")
 	@ResponseBody

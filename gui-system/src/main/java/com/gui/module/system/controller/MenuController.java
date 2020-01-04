@@ -3,6 +3,7 @@ package com.gui.module.system.controller;
 import com.gui.base.BaseController;
 import com.gui.base.BaseResponse;
 import com.gui.base.Constant;
+import com.gui.constants.SecurityPermissionConstants;
 import com.gui.module.common.annotation.Log;
 import com.gui.module.common.domain.Tree;
 import com.gui.module.system.domain.MenuDO;
@@ -27,13 +28,13 @@ public class MenuController extends BaseController {
 	@Autowired
     MenuService menuService;
 
-	@RequiresPermissions("sys:menu:menu")
+	@RequiresPermissions(SecurityPermissionConstants.System.QUERY_MENU_LIST)
 	@GetMapping()
 	String menu(Model model) {
 		return prefix+"/menu";
 	}
 
-	@RequiresPermissions("sys:menu:menu")
+	@RequiresPermissions(SecurityPermissionConstants.System.QUERY_MENU_LIST)
 	@RequestMapping("/list")
 	@ResponseBody
 	List<MenuDO> list(@RequestParam Map<String, Object> params) {
@@ -42,7 +43,7 @@ public class MenuController extends BaseController {
 	}
 
 	@Log("添加菜单")
-	@RequiresPermissions("sys:menu:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_MENU)
 	@GetMapping("/add/{pId}")
 	String add(Model model, @PathVariable("pId") Long pId) {
 		model.addAttribute("pId", pId);
@@ -55,7 +56,7 @@ public class MenuController extends BaseController {
 	}
 
 	@Log("编辑菜单")
-	@RequiresPermissions("sys:menu:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_MENU)
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
 		MenuDO mdo = menuService.get(id);
@@ -71,7 +72,7 @@ public class MenuController extends BaseController {
 	}
 
 	@Log("保存菜单")
-	@RequiresPermissions("sys:menu:add")
+	@RequiresPermissions(SecurityPermissionConstants.System.ADD_MENU)
 	@PostMapping("/save")
 	@ResponseBody
 	BaseResponse<Void> save(MenuDO menu) {
@@ -86,7 +87,7 @@ public class MenuController extends BaseController {
 	}
 
 	@Log("更新菜单")
-	@RequiresPermissions("sys:menu:edit")
+	@RequiresPermissions(SecurityPermissionConstants.System.EDIT_MENU)
 	@PostMapping("/update")
 	@ResponseBody
 	BaseResponse<Void> update(MenuDO menu) {
@@ -101,7 +102,7 @@ public class MenuController extends BaseController {
 	}
 
 	@Log("删除菜单")
-	@RequiresPermissions("sys:menu:remove")
+	@RequiresPermissions(SecurityPermissionConstants.System.REMOVE_MENU)
 	@PostMapping("/remove")
 	@ResponseBody
 	BaseResponse<Void> remove(Long id) {
