@@ -1,1 +1,7 @@
 /gui-system/.idea/*
+/gui-system/target/*
+*iml
+/gui-system/applog/*
+/gui-system/.settings/
+/gui-system.classpath
+/gui-system.project
