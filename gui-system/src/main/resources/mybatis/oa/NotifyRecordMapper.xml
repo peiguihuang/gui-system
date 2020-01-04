@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gui.oa.dao.NotifyRecordDao">
+<mapper namespace="com.gui.module.oa.dao.NotifyRecordDao">
 
-	<select id="get" resultType="com.gui.oa.domain.NotifyRecordDO">
+	<select id="get" resultType="com.gui.module.oa.domain.NotifyRecordDO">
 		select
 		`id`,`notify_id`,`user_id`,`is_read`,`read_date` from oa_notify_record
 		where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.gui.oa.domain.NotifyRecordDO">
+	<select id="list" resultType="com.gui.module.oa.domain.NotifyRecordDO">
 		select `id`,`notify_id`,`user_id`,`is_read`,`read_date` from
 		oa_notify_record
 		<where>
@@ -43,7 +43,7 @@
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.gui.oa.domain.NotifyRecordDO"
+	<insert id="save" parameterType="com.gui.module.oa.domain.NotifyRecordDO"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into oa_notify_record
 		(
@@ -61,7 +61,7 @@
 		)
 	</insert>
 
-	<update id="update" parameterType="com.gui.oa.domain.NotifyRecordDO">
+	<update id="update" parameterType="com.gui.module.oa.domain.NotifyRecordDO">
 		update oa_notify_record
 		<set>
 			<if test="notifyId != null">`notify_id` = #{notifyId}, </if>
@@ -85,7 +85,7 @@
 	</delete>
 
 
-	<insert id="batchSave" parameterType="com.gui.oa.domain.NotifyRecordDO"
+	<insert id="batchSave" parameterType="com.gui.module.oa.domain.NotifyRecordDO"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into oa_notify_record
 		(
@@ -130,7 +130,7 @@
 		</foreach>
 	</delete>
 
-	<update id="changeRead" parameterType="com.gui.oa.domain.NotifyRecordDO">
+	<update id="changeRead" parameterType="com.gui.module.oa.domain.NotifyRecordDO">
 		update oa_notify_record
 		<set>
 			<if test="isRead != null">`is_read` = #{isRead}, </if>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gui.oa.dao.NotifyDao">
+<mapper namespace="com.gui.module.oa.dao.NotifyDao">
 
-	<select id="get" resultType="com.gui.oa.domain.NotifyDO">
+	<select id="get" resultType="com.gui.module.oa.domain.NotifyDO">
 		select
 		`id`,`type`,`title`,`content`,`files`,`status`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
 		from oa_notify where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.gui.oa.domain.NotifyDO">
+	<select id="list" resultType="com.gui.module.oa.domain.NotifyDO">
 		select
 		`id`,`type`,`title`,`content`,`files`,`status`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
 		from oa_notify
@@ -58,7 +58,7 @@
 		</where>
 	</select>
 
-	<insert id="save" parameterType="com.gui.oa.domain.NotifyDO"
+	<insert id="save" parameterType="com.gui.module.oa.domain.NotifyDO"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into oa_notify
 		(
@@ -90,7 +90,7 @@
 		)
 	</insert>
 
-	<update id="update" parameterType="com.gui.oa.domain.NotifyDO">
+	<update id="update" parameterType="com.gui.module.oa.domain.NotifyDO">
 		update oa_notify
 		<set>
 			<if test="type != null">`type` = #{type}, </if>
@@ -120,7 +120,7 @@
 		</foreach>
 	</delete>
 
-	<select id="listByIds" resultType="com.gui.oa.domain.NotifyDO">
+	<select id="listByIds" resultType="com.gui.module.oa.domain.NotifyDO">
 		select
 		`id`,`type`,`title`,`content`,`files`,`status`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
 		from oa_notify where id in
@@ -140,7 +140,7 @@
 		r.is_read = #{isRead}
 	</select>
 
-	<select id="listDTO" resultType="com.gui.oa.domain.NotifyDTO">
+	<select id="listDTO" resultType="com.gui.module.oa.domain.NotifyDTO">
 		select DISTINCT
 		n.id ,`type`,`title`,`content`,`files`,r.is_read,`status`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
 		from oa_notify_record r right JOIN oa_notify n on r.notify_id = n.id

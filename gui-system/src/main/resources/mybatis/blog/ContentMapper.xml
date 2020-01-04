@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gui.blog.dao.ContentDao">
+<mapper namespace="com.gui.module.blog.dao.ContentDao">
 
-	<select id="get" resultType="com.gui.blog.domain.ContentDO">
+	<select id="get" resultType="com.gui.module.blog.domain.ContentDO">
 		select `cid`,`title`,`slug`,`created`,`modified`,`content`,`type`,`tags`,`categories`,`hits`,`comments_num`,`allow_comment`,`allow_ping`,`allow_feed`,`status`,`author`,`gtm_create`,`gtm_modified` from blog_content where cid = #{value}
 	</select>
 
-	<select id="list" resultType="com.gui.blog.domain.ContentDO">
+	<select id="list" resultType="com.gui.module.blog.domain.ContentDO">
 		select `cid`,`title`,`slug`,`created`,`modified`,`content`,`type`,`tags`,`categories`,`hits`,`comments_num`,`allow_comment`,`allow_ping`,`allow_feed`,`status`,`author`,`gtm_create`,`gtm_modified` from blog_content
         <where>  
 		  		  <if test="cid != null and cid != ''"> and cid = #{cid} </if>
@@ -66,7 +66,7 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.gui.blog.domain.ContentDO" useGeneratedKeys="true" keyProperty="cid">
+	<insert id="save" parameterType="com.gui.module.blog.domain.ContentDO" useGeneratedKeys="true" keyProperty="cid">
 		insert into blog_content
 		(
 			`title`, 
@@ -109,7 +109,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.gui.blog.domain.ContentDO">
+	<update id="update" parameterType="com.gui.module.blog.domain.ContentDO">
 		update blog_content 
 		<set>
 			<if test="title != null">`title` = #{title}, </if>

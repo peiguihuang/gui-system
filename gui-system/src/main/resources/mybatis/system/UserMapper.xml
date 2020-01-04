@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gui.system.dao.UserDao">
+<mapper namespace="com.gui.module.system.dao.UserDao">
 
-	<select id="get" resultType="com.gui.system.domain.UserDO">
+	<select id="get" resultType="com.gui.module.system.domain.UserDO">
 		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user where user_id = #{value}
 	</select>
 
-	<select id="list" resultType="com.gui.system.domain.UserDO">
+	<select id="list" resultType="com.gui.module.system.domain.UserDO">
 		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user
         <where>  
 		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
@@ -68,7 +68,7 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.gui.system.domain.UserDO" useGeneratedKeys="true" keyProperty="userId">
+	<insert id="save" parameterType="com.gui.module.system.domain.UserDO" useGeneratedKeys="true" keyProperty="userId">
 		insert into sys_user
 		(
 			`username`, 
@@ -113,7 +113,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.gui.system.domain.UserDO">
+	<update id="update" parameterType="com.gui.module.system.domain.UserDO">
 		update sys_user 
 		<set>
 			<if test="username != null">`username` = #{username}, </if>

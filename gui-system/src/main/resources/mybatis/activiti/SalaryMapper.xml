@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gui.activiti.dao.SalaryDao">
+<mapper namespace="com.gui.module.activiti.dao.SalaryDao">
 
-	<select id="get" resultType="com.gui.activiti.domain.SalaryDO">
+	<select id="get" resultType="com.gui.module.activiti.domain.SalaryDO">
 		select `id`,`PROC_INS_ID`,`USER_ID`,`OFFICE_ID`,`POST`,`AGE`,`EDU`,`CONTENT`,`OLDA`,`OLDB`,`OLDC`,`NEWA`,`NEWB`,`NEWC`,`ADD_NUM`,`EXE_DATE`,`HR_TEXT`,`LEAD_TEXT`,`MAIN_LEAD_TEXT`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag` from salary where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.gui.activiti.domain.SalaryDO">
+	<select id="list" resultType="com.gui.module.activiti.domain.SalaryDO">
 		select `id`,`PROC_INS_ID`,`USER_ID`,`OFFICE_ID`,`POST`,`AGE`,`EDU`,`CONTENT`,`OLDA`,`OLDB`,`OLDC`,`NEWA`,`NEWB`,`NEWC`,`ADD_NUM`,`EXE_DATE`,`HR_TEXT`,`LEAD_TEXT`,`MAIN_LEAD_TEXT`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag` from salary
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -80,7 +80,7 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.gui.activiti.domain.SalaryDO">
+	<insert id="save" parameterType="com.gui.module.activiti.domain.SalaryDO">
 		insert into salary
 		(
 			`id`, 
@@ -139,7 +139,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.gui.activiti.domain.SalaryDO">
+	<update id="update" parameterType="com.gui.module.activiti.domain.SalaryDO">
 		update salary 
 		<set>
 			<if test="procInsId != null">`PROC_INS_ID` = #{procInsId}, </if>
