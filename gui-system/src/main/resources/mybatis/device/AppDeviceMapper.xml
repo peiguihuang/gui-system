@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gui.module.device.dao.AppDeviceDao">
+
+	<select id="get" resultType="com.gui.module.device.domain.AppDeviceDO">
+		select `id`,`app_id`,`type`,`merchant_id`,`device_id`,`status`,`create_time`,`update_time` from app_device where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.gui.module.device.domain.AppDeviceDO">
+		select `id`,`app_id`,`type`,`merchant_id`,`device_id`,`status`,`create_time`,`update_time` from app_device
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="appId != null and appId != ''"> and app_id = #{appId} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId} </if>
+		  		  <if test="deviceId != null and deviceId != ''"> and device_id = #{deviceId} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from app_device
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="appId != null and appId != ''"> and app_id = #{appId} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="merchantId != null and merchantId != ''"> and merchant_id = #{merchantId} </if>
+		  		  <if test="deviceId != null and deviceId != ''"> and device_id = #{deviceId} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.gui.module.device.domain.AppDeviceDO" useGeneratedKeys="true" keyProperty="id">
+		insert into app_device
+		(
+			`app_id`, 
+			`type`, 
+			`merchant_id`, 
+			`device_id`, 
+			`status`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		(
+			#{appId}, 
+			#{type}, 
+			#{merchantId}, 
+			#{deviceId}, 
+			#{status}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.gui.module.device.domain.AppDeviceDO">
+		update app_device 
+		<set>
+			<if test="appId != null">`app_id` = #{appId}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="merchantId != null">`merchant_id` = #{merchantId}, </if>
+			<if test="deviceId != null">`device_id` = #{deviceId}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from app_device where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from app_device where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
