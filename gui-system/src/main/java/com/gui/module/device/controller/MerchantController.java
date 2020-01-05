@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,12 @@ public class MerchantController {
 		List<MerchantDO> merchantList = merchantService.list(query);
 		int total = merchantService.count(query);
 		return ResponseUtils.buildPageSuccess(total,merchantList);
+	}
+
+	@GetMapping("/all")
+	@ResponseBody
+	public List<MerchantDO> listType() {
+		return merchantService.list(new HashMap<>(0));
 	}
 	
 	@GetMapping("/add")
