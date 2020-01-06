@@ -53,11 +53,11 @@ function load() {
 								},
 																{
 									field : 'appVersion', 
-									title : '实际用来升级比对，app版本小于该版本就升级' 
+									title : '实际版本号'
 								},
 																{
 									field : 'appShowVersion', 
-									title : 'app显示版本号' 
+									title : '显示版本号'
 								},
 																{
 									field : 'apkUrl', 

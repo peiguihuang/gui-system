@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,15 @@ public class MerchantDeviceController {
 		model.addAttribute("merchantDevice", merchantDevice);
 	    return "device/merchantDevice/edit";
 	}
-	
+
+
+	@GetMapping("/all")
+	@ResponseBody
+	public List<MerchantDeviceDO> listType() {
+		return merchantDeviceService.list(new HashMap<>(0));
+	}
+
+
 	/**
 	 * 保存
 	 */

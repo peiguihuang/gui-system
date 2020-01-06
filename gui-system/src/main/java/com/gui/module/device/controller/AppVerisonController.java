@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,14 @@ public class AppVerisonController {
 		List<AppVerisonDO> appVerisonList = appVerisonService.list(query);
 		int total = appVerisonService.count(query);
 		return ResponseUtils.buildPageSuccess(total,appVerisonList);
+	}
+
+
+
+	@GetMapping("/all")
+	@ResponseBody
+	public List<AppVerisonDO> listType() {
+		return appVerisonService.list(new HashMap<>(0));
 	}
 	
 	@GetMapping("/add")
