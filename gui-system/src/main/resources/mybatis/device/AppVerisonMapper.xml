@@ -7,6 +7,16 @@
 		select `id`,`app_version`,`app_show_version`,`apk_url`,`app_desc`,`create_time`,`update_time` from app_verison where id = #{value}
 	</select>
 
+	<select id="getUpgradeVersion" resultType="com.gui.module.device.domain.AppVerisonDO" parameterType="com.gui.module.device.domain.AppUpgradeDO">
+		SELECT av.app_version,av.app_show_version,av.apk_url from app_device ad
+		LEFT JOIN app_verison av ON ad.app_id=av.id
+		LEFT JOIN merchant m ON ad.merchant_id=m.id
+		LEFT JOIN merchant_device md ON ad.device_id=md.id
+
+		WHERE (m.merchant_name=#{merchantId} OR md.device_sn=#{terminalId} OR type=0) AND ad.status=0
+		ORDER BY av.app_version,ad.create_time DESC LIMIT 1
+
+	</select>
 	<select id="list" resultType="com.gui.module.device.domain.AppVerisonDO">
 		select `id`,`app_version`,`app_show_version`,`apk_url`,`app_desc`,`create_time`,`update_time` from app_verison
         <where>  

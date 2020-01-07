@@ -30,6 +30,9 @@ public class MerchantDeviceDO implements Serializable {
  	*/
 	private Long merchantId;
 
+	private String merchantName;
+
+
 	/**
  	* 机器序列号
  	*/

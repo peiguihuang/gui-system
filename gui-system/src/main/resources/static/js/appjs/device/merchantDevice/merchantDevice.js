@@ -52,8 +52,8 @@ function load() {
 									title : '' 
 								},
 																{
-									field : 'merchantId', 
-									title : '商户ID' 
+									field : 'merchantName',
+									title : '商户名称'
 								},
 																{
 									field : 'deviceSn', 

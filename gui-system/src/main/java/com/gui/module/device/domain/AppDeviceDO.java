@@ -35,6 +35,9 @@ public class AppDeviceDO implements Serializable {
  	*/
 	private Integer type;
 
+	private String typeName;
+
+
 	/**
  	* 商户ID
  	*/
@@ -49,6 +52,7 @@ public class AppDeviceDO implements Serializable {
  	* 0生效 1失效
  	*/
 	private Integer status;
+	private String statusName;
 
 	/**
  	* 创建时间
@@ -60,5 +64,24 @@ public class AppDeviceDO implements Serializable {
  	*/
 	private Date updateTime;
 
+	/**
+	 * 实际用来升级比对，app版本小于该版本就升级
+	 */
+	private Long appVersion;
+
+	/**
+	 * app显示版本号
+	 */
+	private String appShowVersion;
+
+	/**
+	 * 机器名称
+	 */
+	private String deviceName;
+
+	/**
+	 * 商户名称
+	 */
+	private String merchantName;
 
 }

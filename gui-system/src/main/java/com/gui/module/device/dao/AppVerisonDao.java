@@ -1,6 +1,7 @@
 package com.gui.module.device.dao;
 
 
+import com.gui.module.device.domain.AppUpgradeDO;
 import com.gui.module.device.domain.AppVerisonDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,7 +18,9 @@ import java.util.Map;
 public interface AppVerisonDao {
 
 	AppVerisonDO get(Long id);
-	
+
+	AppVerisonDO getUpgradeVersion(AppUpgradeDO appUpgradeDO);
+
 	List<AppVerisonDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);

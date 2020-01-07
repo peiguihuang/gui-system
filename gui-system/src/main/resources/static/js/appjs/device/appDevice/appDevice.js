@@ -52,24 +52,24 @@ function load() {
 									title : '数据ID' 
 								},
 																{
-									field : 'appId', 
-									title : 'APP ID' 
+									field : 'appShowVersion',
+									title : '显示版本号'
 								},
 																{
-									field : 'type', 
-									title : '0 默认全部升级 1 针对商户升级  2针对单台设备升级' 
+									field : 'typeName',
+									title : '升级对象'
 								},
 																{
-									field : 'merchantId', 
-									title : '商户ID' 
+									field : 'merchantName',
+									title : '商户名称'
 								},
 																{
-									field : 'deviceId', 
-									title : '设备ID' 
+									field : 'deviceName',
+									title : '机器名称'
 								},
 																{
-									field : 'status', 
-									title : '0生效 1失效' 
+									field : 'statusName',
+									title : '状态'
 								},
 																{
 									field : 'createTime', 

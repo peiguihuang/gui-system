@@ -1,6 +1,7 @@
 package com.gui.module.device.service.impl;
 
 import com.gui.module.device.dao.AppVerisonDao;
+import com.gui.module.device.domain.AppUpgradeDO;
 import com.gui.module.device.domain.AppVerisonDO;
 import com.gui.module.device.service.AppVerisonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,12 @@ public class AppVerisonServiceImpl implements AppVerisonService {
 	public AppVerisonDO get(Long id){
 		return appVerisonDao.get(id);
 	}
-	
+
+	@Override
+	public AppVerisonDO getUpgradeVersion(AppUpgradeDO appUpgradeDO) {
+		return appVerisonDao.getUpgradeVersion(appUpgradeDO);
+	}
+
 	@Override
 	public List<AppVerisonDO> list(Map<String, Object> map){
 		return appVerisonDao.list(map);

@@ -1,10 +1,6 @@
 package com.gui.module.system.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.gui.base.Constant;
-import com.gui.module.common.shiro.RedisCacheManager;
-import com.gui.module.common.shiro.RedisManager;
-import com.gui.module.common.shiro.RedisSessionDAO;
 import com.gui.module.system.shiro.UserRealm;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -32,17 +28,6 @@ import java.util.LinkedHashMap;
  */
 @Configuration
 public class ShiroConfig {
-    @Value("${spring.redis.host}")
-    private String host;
-    @Value("${spring.redis.password}")
-    private String password;
-    @Value("${spring.redis.port}")
-    private int port;
-    @Value("${spring.redis.timeout}")
-    private int timeout;
-
-    @Value("${spring.cache.type}")
-    private String cacheType ;
 
     @Value("${server.session-timeout}")
     private int tomcatTimeout;
@@ -71,6 +56,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/login","anon");
+        filterChainDefinitionMap.put("/app/upgrade/**","anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
@@ -95,11 +81,9 @@ public class ShiroConfig {
         //设置realm.
         securityManager.setRealm(userRealm());
         // 自定义缓存实现 使用redis
-        if (Constant.CACHE_TYPE_REDIS.equals(cacheType)) {
-            securityManager.setCacheManager(rediscacheManager());
-        } else {
-            securityManager.setCacheManager(ehCacheManager());
-        }
+
+        securityManager.setCacheManager(ehCacheManager());
+
         securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
@@ -124,53 +108,10 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-    /**
-     * 配置shiro redisManager
-     *
-     * @return
-     */
-    @Bean
-    public RedisManager redisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(host);
-        redisManager.setPort(port);
-        redisManager.setExpire(1800);// 配置缓存过期时间
-        //redisManager.setTimeout(1800);
-        redisManager.setPassword(password);
-        return redisManager;
-    }
-
-    /**
-     * cacheManager 缓存 redis实现
-     * 使用的是shiro-redis开源插件
-     *
-     * @return
-     */
-    public RedisCacheManager rediscacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
-        return redisCacheManager;
-    }
-
-
-    /**
-     * RedisSessionDAO shiro sessionDao层的实现 通过redis
-     * 使用的是shiro-redis开源插件
-     */
-    @Bean
-    public RedisSessionDAO redisSessionDAO() {
-        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setRedisManager(redisManager());
-        return redisSessionDAO;
-    }
 
     @Bean
     public SessionDAO sessionDAO() {
-        if (Constant.CACHE_TYPE_REDIS.equals(cacheType)) {
-            return redisSessionDAO();
-        } else {
-            return new MemorySessionDAO();
-        }
+        return new MemorySessionDAO();
     }
 
     /**

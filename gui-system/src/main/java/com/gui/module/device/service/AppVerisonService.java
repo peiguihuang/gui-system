@@ -1,6 +1,7 @@
 package com.gui.module.device.service;
 
 
+import com.gui.module.device.domain.AppUpgradeDO;
 import com.gui.module.device.domain.AppVerisonDO;
 
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.Map;
 public interface AppVerisonService {
 	
 	AppVerisonDO get(Long id);
-	
+
+	AppVerisonDO getUpgradeVersion(AppUpgradeDO appUpgradeDO);
+
 	List<AppVerisonDO> list(Map<String, Object> map);
-	
+
 	int count(Map<String, Object> map);
 	
 	int save(AppVerisonDO appVerison);
