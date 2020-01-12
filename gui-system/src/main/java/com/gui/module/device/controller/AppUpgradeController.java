@@ -1,11 +1,10 @@
 package com.gui.module.device.controller;
 
-import com.gui.base.BaseResponse;
+import com.gui.base.BaseApiResponse;
 import com.gui.module.device.domain.AppUpgradeDO;
 import com.gui.module.device.domain.AppVerisonDO;
 import com.gui.module.device.domain.AppVerisonDTO;
 import com.gui.module.device.service.AppVerisonService;
-import com.gui.utils.ResponseUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,15 +27,16 @@ public class AppUpgradeController {
 
     @ResponseBody
     @RequestMapping("/check")
-    public BaseResponse<AppVerisonDTO> update(AppUpgradeDO appUpgradeDO) {
+    public BaseApiResponse<AppVerisonDTO> update(AppUpgradeDO appUpgradeDO) {
         AppVerisonDTO appVerisonDTO = new AppVerisonDTO();
+        BaseApiResponse<AppVerisonDTO> baseApiResponse = new BaseApiResponse<>();
+
         AppVerisonDO appVerisonDO = appVerisonService.getUpgradeVersion(appUpgradeDO);
         if (Objects.nonNull(appUpgradeDO)){
             BeanUtils.copyProperties(appVerisonDO,appVerisonDTO);
-
-            return ResponseUtils.success(appVerisonDTO);
+            baseApiResponse.setData(appVerisonDTO);
 
         }
-        return ResponseUtils.success();
+        return baseApiResponse;
     }
 }

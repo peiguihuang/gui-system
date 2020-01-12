@@ -1,1 +1,2 @@
 mvn clean package -Dmaven.test.skip=true -e -f D:\gddzcode\gui-system\pom.xml
+
