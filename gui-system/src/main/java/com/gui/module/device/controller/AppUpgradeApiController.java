@@ -24,7 +24,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/app/upgrade")
-public class AppUpgradeController {
+public class AppUpgradeApiController {
     @Autowired
     AppVerisonService appVerisonService;
 
