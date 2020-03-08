@@ -28,7 +28,7 @@ public class AppVerisonDO implements Serializable {
 	/**
  	* 实际用来升级比对，app版本小于该版本就升级
  	*/
-	private Long appVersion;
+	private String appVersion;
 
 	/**
  	* app显示版本号
