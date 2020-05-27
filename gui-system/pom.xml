@@ -29,7 +29,6 @@
         <jsoup.version>1.9.2</jsoup.version>
         <jedis.version>2.9.0</jedis.version>
         <swagger.version>2.6.1</swagger.version>
-        <quartz.version>2.2.1</quartz.version>
         <fastjson.version>1.2.31</fastjson.version>
         <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>
         <shiro-ehcache.version>1.4.0</shiro-ehcache.version>
@@ -160,19 +159,6 @@
             <artifactId>ehcache</artifactId>
         </dependency>
 
-
-
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>${quartz.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <!-- SpringWebSocket依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -181,29 +167,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-        </dependency>
-
-        <!--activiti-->
-        <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-engine</artifactId>
-            <version>${activiti.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-spring</artifactId>
-            <version>${activiti.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-modeler</artifactId>
-            <version>${activiti.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-diagram-rest</artifactId>
-            <version>${activiti.version}</version>
         </dependency>
 
         <!--swagger2-->
@@ -258,6 +221,7 @@
                 </configuration>
             </plugin>
         </plugins>
+
     </build>
 
 </project>
