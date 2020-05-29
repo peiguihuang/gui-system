@@ -1,5 +1,6 @@
 $().ready(function () {
     validateRule();
+    selectLoad();
 });
 
 $.validator.setDefaults({
@@ -7,6 +8,36 @@ $.validator.setDefaults({
         save();
     }
 });
+
+
+function selectLoad() {
+    var html = "";
+    $.ajax({
+        url : '/bus/line/all',
+        success : function(data) {
+            //加载数据
+            for (var i = 0; i < data.length; i++) {
+                html += '<option value="' + data[i].id + '">' + data[i].startPosition + '->' + data[i].endPosition + '</option>'
+            }
+            $("#merchantId").append(html);
+            $("#merchantId").chosen({
+                maxHeight : 200
+            });
+            //点击事件
+            $('.chosen-select').on('change', function(e, params) {
+                console.log(params.selected);
+                var opt = {
+                    query : {
+                        type : params.selected,
+                    }
+                }
+                $('#exampleTable').bootstrapTable('refresh', opt);
+            });
+        }
+    });
+}
+
+
 function save() {
     $.ajax({
         cache: true,

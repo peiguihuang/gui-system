@@ -1,6 +1,7 @@
 package com.gui.module.bus.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,15 @@ public class LineController {
         int total = lineService.count(query);
         return ResponseUtils.buildPageSuccess(total, lineList);
     }
+
+
+
+    @GetMapping("/all")
+    @ResponseBody
+    public List<LineDO> listType() {
+        return lineService.list(new HashMap<>(0));
+    }
+
 
     @GetMapping("/add")
     @RequiresPermissions("bus:line:add")
