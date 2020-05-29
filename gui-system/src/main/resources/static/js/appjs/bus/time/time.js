@@ -1,4 +1,4 @@
-var prefix = "/${pathName}/${classname}"
+var prefix = "/bus/time"
 $(function () {
     load();
 });
@@ -46,34 +46,63 @@ function load() {
                     {
                         checkbox: true
                     },
-                    #foreach($column in $columns)
-                        {
-                            field: '${column.attrname}',
-                            title: '${column.comments}'
-                        },
-                    #end
+                    {
+                        field: 'id',
+                        title: 'ID'
+                    },
+                    {
+                        field: 'amount',
+                        title: '金额'
+                    },
+
+                    {
+                        field: 'startPosition',
+                        title: '起点'
+                    },
+                    {
+                        field: 'endPosition',
+                        title: '终点'
+                    },
+                    {
+                        field: 'boardingPosition',
+                        title: '上车点'
+                    },
+                    {
+                        field: 'departTime',
+                        title: '出发时间'
+                    },
+                    {
+                        field: 'createTime',
+                        title: '创建时间'
+                    },
+                    {
+                        field: 'updateTime',
+                        title: '更新时间'
+                    },
                     {
                         title: '操作',
                         field: 'id',
                         align: 'center',
                         formatter: function (value, row, index) {
                             var e = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
-                                + row.${pk.attrname}
+                                + row.id
                                 + '\')"><i class="fa fa-edit"></i></a> ';
                             var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
-                                + row.${pk.attrname}
+                                + row.id
                                 + '\')"><i class="fa fa-remove"></i></a> ';
                             var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-                                + row.${pk.attrname}
+                                + row.id
                                 + '\')"><i class="fa fa-key"></i></a> ';
                             return e + d;
                         }
                     }]
             });
 }
+
 function reLoad() {
     $('#exampleTable').bootstrapTable('refresh');
 }
+
 function add() {
     layer.open({
         type: 2,
@@ -84,6 +113,7 @@ function add() {
         content: prefix + '/add' // iframe的url
     });
 }
+
 function edit(id) {
     layer.open({
         type: 2,
@@ -94,6 +124,7 @@ function edit(id) {
         content: prefix + '/edit/' + id // iframe的url
     });
 }
+
 function remove(id) {
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
@@ -102,7 +133,7 @@ function remove(id) {
             url: prefix + "/remove",
             type: "post",
             data: {
-                '${pk.attrname}': id
+                'id': id
             },
             success: function (r) {
                 if (r.code == 0) {
@@ -118,6 +149,7 @@ function remove(id) {
 
 function resetPwd(id) {
 }
+
 function batchRemove() {
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
     if (rows.length == 0) {
@@ -131,7 +163,7 @@ function batchRemove() {
         var ids = new Array();
         // 遍历所有选择的行数据，取每条数据对应的ID
         $.each(rows, function (i, row) {
-            ids[i] = row['${pk.attrname}'];
+            ids[i] = row['id'];
         });
         $.ajax({
             type: 'POST',

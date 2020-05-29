@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gui.module.bus.dao.TimeDao">
+
+    <select id="get" resultType="com.gui.module.bus.domain.TimeDO">
+		select `id`,`bus_line_id`,`depart_time`,`status`,`amount`,`order_number`,`lock`,`create_time`,`update_time`,`start_position`,`end_position`,`boarding_position` from bus_time where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.gui.module.bus.domain.TimeDO">
+        select `id`,`bus_line_id`,`depart_time`,`status`,`amount`,`order_number`,`lock`,`create_time`,`update_time`,`start_position`,`end_position`,`boarding_position`        from bus_time
+        <where>
+                            <if test="id != null and id != ''">and id =
+                    #{id}
+                </if>
+                            <if test="busLineId != null and busLineId != ''">and bus_line_id =
+                    #{busLineId}
+                </if>
+                            <if test="departTime != null and departTime != ''">and depart_time =
+                    #{departTime}
+                </if>
+                            <if test="status != null and status != ''">and status =
+                    #{status}
+                </if>
+                            <if test="amount != null and amount != ''">and amount =
+                    #{amount}
+                </if>
+                            <if test="orderNumber != null and orderNumber != ''">and order_number =
+                    #{orderNumber}
+                </if>
+                            <if test="lock != null and lock != ''">and lock =
+                    #{lock}
+                </if>
+                            <if test="createTime != null and createTime != ''">and create_time =
+                    #{createTime}
+                </if>
+                            <if test="updateTime != null and updateTime != ''">and update_time =
+                    #{updateTime}
+                </if>
+                            <if test="startPosition != null and startPosition != ''">and start_position =
+                    #{startPosition}
+                </if>
+                            <if test="endPosition != null and endPosition != ''">and end_position =
+                    #{endPosition}
+                </if>
+                            <if test="boardingPosition != null and boardingPosition != ''">and boarding_position =
+                    #{boardingPosition}
+                </if>
+                    </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from bus_time
+        <where>
+                            <if test="id != null and id != ''">and id =
+                    #{id}
+                </if>
+                            <if test="busLineId != null and busLineId != ''">and bus_line_id =
+                    #{busLineId}
+                </if>
+                            <if test="departTime != null and departTime != ''">and depart_time =
+                    #{departTime}
+                </if>
+                            <if test="status != null and status != ''">and status =
+                    #{status}
+                </if>
+                            <if test="amount != null and amount != ''">and amount =
+                    #{amount}
+                </if>
+                            <if test="orderNumber != null and orderNumber != ''">and order_number =
+                    #{orderNumber}
+                </if>
+                            <if test="lock != null and lock != ''">and lock =
+                    #{lock}
+                </if>
+                            <if test="createTime != null and createTime != ''">and create_time =
+                    #{createTime}
+                </if>
+                            <if test="updateTime != null and updateTime != ''">and update_time =
+                    #{updateTime}
+                </if>
+                            <if test="startPosition != null and startPosition != ''">and start_position =
+                    #{startPosition}
+                </if>
+                            <if test="endPosition != null and endPosition != ''">and end_position =
+                    #{endPosition}
+                </if>
+                            <if test="boardingPosition != null and boardingPosition != ''">and boarding_position =
+                    #{boardingPosition}
+                </if>
+                    </where>
+    </select>
+
+    <insert id="save" parameterType="com.gui.module.bus.domain.TimeDO"            useGeneratedKeys="true" keyProperty="id">
+		insert into bus_time
+		(
+                    			`bus_line_id`, 
+                    			`depart_time`, 
+                    			`status`, 
+                    			`amount`, 
+                    			`order_number`, 
+                    			`lock`, 
+                    			`create_time`, 
+                    			`update_time`, 
+                    			`start_position`, 
+                    			`end_position`, 
+                    			`boarding_position`
+            		)
+		values
+		(
+                    			#{busLineId}, 
+                    			#{departTime}, 
+                    			#{status}, 
+                    			#{amount}, 
+                    			#{orderNumber}, 
+                    			#{lock}, 
+                    			#{createTime}, 
+                    			#{updateTime}, 
+                    			#{startPosition}, 
+                    			#{endPosition}, 
+                    			#{boardingPosition}
+            		)
+	</insert>
+
+    <update id="update" parameterType="com.gui.module.bus.domain.TimeDO">
+        update bus_time
+        <set>
+                                                                            <if test="busLineId != null">`bus_line_id` = #{busLineId
+                        }, </if>
+                                                                <if test="departTime != null">`depart_time` = #{departTime
+                        }, </if>
+                                                                <if test="status != null">`status` = #{status
+                        }, </if>
+                                                                <if test="amount != null">`amount` = #{amount
+                        }, </if>
+                                                                <if test="orderNumber != null">`order_number` = #{orderNumber
+                        }, </if>
+                                                                <if test="lock != null">`lock` = #{lock
+                        }, </if>
+                                                                <if test="createTime != null">`create_time` = #{createTime
+                        }, </if>
+                                                                <if test="updateTime != null">`update_time` = #{updateTime
+                        }, </if>
+                                                                <if test="startPosition != null">`start_position` = #{startPosition
+                        }, </if>
+                                                                <if test="endPosition != null">`end_position` = #{endPosition
+                        }, </if>
+                                                                <if test="boardingPosition != null">`boarding_position` = #{boardingPosition
+                        }</if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from bus_time where id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from bus_time where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

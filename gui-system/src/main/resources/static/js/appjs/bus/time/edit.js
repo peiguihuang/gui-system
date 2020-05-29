@@ -4,14 +4,14 @@ $().ready(function () {
 
 $.validator.setDefaults({
     submitHandler: function () {
-        save();
+        update();
     }
 });
-function save() {
+function update() {
     $.ajax({
         cache: true,
         type: "POST",
-        url: "/${pathName}/${classname}/save",
+        url: "/bus/time/update",
         data: $('#signupForm').serialize(),// 你的formid
         async: false,
         error: function (request) {
@@ -42,7 +42,7 @@ function validateRule() {
         },
         messages: {
             name: {
-                required: icon + "请输入姓名"
+                required: icon + "请输入名字"
             }
         }
     })

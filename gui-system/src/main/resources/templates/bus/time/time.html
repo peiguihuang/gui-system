@@ -9,11 +9,11 @@
             <div class="ibox-body">
                 <div class="fixed-table-toolbar">
                     <div class="columns pull-left">
-                        <button shiro:hasPermission="${pathName}:${classname}:add" type="button"
+                        <button shiro:hasPermission="bus:time:add" type="button"
                                 class="btn  btn-primary" onclick="add()">
                             <i class="fa fa-plus" aria-hidden="true"></i>添加
                         </button>
-                        <button shiro:hasPermission="${pathName}:${classname}:batchRemove" type="button"
+                        <button shiro:hasPermission="bus:time:batchRemove" type="button"
                                 class="btn  btn-danger"
                                 onclick="batchRemove()">
                             <i class="fa fa-trash" aria-hidden="true"></i>删除
@@ -41,23 +41,23 @@
         var s_resetPwd_h = 'hidden';
     </script>
 </div>
-<div shiro:hasPermission="${pathName}:${classname}:edit">
+<div shiro:hasPermission="bus:time:edit">
     <script type="text/javascript">
         s_edit_h = '';
     </script>
 </div>
-<div shiro:hasPermission="${pathName}:${classname}:remove">
+<div shiro:hasPermission="bus:time:remove">
     <script type="text/javascript">
         var s_remove_h = '';
     </script>
 </div>
-<div shiro:hasPermission="${pathName}:${classname}:resetPwd">
+<div shiro:hasPermission="bus:time:resetPwd">
     <script type="text/javascript">
         var s_resetPwd_h = '';
     </script>
 </div>
 </div>
 <div th:include="include :: footer"></div>
-<script type="text/javascript" src="/js/appjs/${pathName}/${classname}/${classname}.js"></script>
+<script type="text/javascript" src="/js/appjs/bus/time/time.js"></script>
 </body>
 </html>
