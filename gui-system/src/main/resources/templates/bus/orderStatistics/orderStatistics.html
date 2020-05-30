@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-body">
+                <div class="fixed-table-toolbar">
+                    <div class="columns pull-left">
+                        <button shiro:hasPermission="bus:orderStatistics:add" type="button"
+                                class="btn  btn-primary" onclick="add()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>添加
+                        </button>
+                        <button shiro:hasPermission="bus:orderStatistics:batchRemove" type="button"
+                                class="btn  btn-danger"
+                                onclick="batchRemove()">
+                            <i class="fa fa-trash" aria-hidden="true"></i>删除
+                        </button>
+                    </div>
+
+                </div>
+
+                    <table border="1" width="100%">
+                        <tr>
+                            <th width="25%"><center><font size="5px"><strong>今日汇总金额</strong></font></center></th>
+                            <th width="25%"><center><font size="5px"><strong>今日成单数</strong></font></center></th>
+                            <th width="25%"><center><font size="5px"><strong>今日待支付单数</strong></font></center></th>
+                            <th width="25%"><center><font size="5px"><strong>今日取消单数</strong></font></center></th>
+
+                        </tr>
+                        <tr>
+                            <td><center><font size="6px"><strong><label id="totalAmount" name="totalAmount" >0</label></strong></font></center></td>
+                            <td><center><font size="6px"><strong><label id="payCount" name="payCount">0</label></strong></font></center></td>
+                            <td><center><font size="6px"><strong><label id="waitPayCount" name="waitPayCount">0</label></strong></font></center></td>
+                            <td><center><font size="6px"><strong><label id="cancelCount" name="cancelCount">0</label></strong></font></center></td>
+
+                        </tr>
+                    </table>
+                <table id="exampleTable" data-mobile-responsive="true">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--shiro控制bootstraptable行内按钮看见性 来自gui的创新方案 -->
+<div>
+    <script type="text/javascript">
+        var s_edit_h = 'hidden';
+        var s_remove_h = 'hidden';
+        var s_resetPwd_h = 'hidden';
+    </script>
+</div>
+<div shiro:hasPermission="bus:orderStatistics:edit">
+    <script type="text/javascript">
+        s_edit_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="bus:orderStatistics:remove">
+    <script type="text/javascript">
+        var s_remove_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="bus:orderStatistics:resetPwd">
+    <script type="text/javascript">
+        var s_resetPwd_h = '';
+    </script>
+</div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/bus/orderStatistics/orderStatistics.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gui.module.bus.dao.SubOrderDao">
+
+    <select id="get" resultType="com.gui.module.bus.domain.SubOrderDO">
+		select `id`,`uid`,`pay_status`,`amount`,`pay_time`,`total_order_id`,`bus_time_id`,`boarding_position`,`start_position`,`end_position`,`depart_time`,`order_number`,`create_time`,`update_time`,realname from bus_sub_order where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.gui.module.bus.domain.SubOrderDO">
+        select `id`,`uid`,`pay_status`,`amount`,`pay_time`,`total_order_id`,`bus_time_id`,`boarding_position`,`start_position`,`end_position`,`depart_time`,`order_number`,`create_time`,`update_time`,realname        from bus_sub_order
+        <where>
+                            <if test="id != null and id != ''">and id =
+                    #{id}
+                </if>
+                            <if test="uid != null and uid != ''">and uid =
+                    #{uid}
+                </if>
+                            <if test="payStatus != null and payStatus != ''">and pay_status =
+                    #{payStatus}
+                </if>
+                            <if test="amount != null and amount != ''">and amount =
+                    #{amount}
+                </if>
+                            <if test="payTime != null and payTime != ''">and pay_time =
+                    #{payTime}
+                </if>
+                            <if test="totalOrderId != null and totalOrderId != ''">and total_order_id =
+                    #{totalOrderId}
+                </if>
+                            <if test="busTimeId != null and busTimeId != ''">and bus_time_id =
+                    #{busTimeId}
+                </if>
+                            <if test="boardingPosition != null and boardingPosition != ''">and boarding_position =
+                    #{boardingPosition}
+                </if>
+                            <if test="startPosition != null and startPosition != ''">and start_position =
+                    #{startPosition}
+                </if>
+                            <if test="endPosition != null and endPosition != ''">and end_position =
+                    #{endPosition}
+                </if>
+                            <if test="departTime != null and departTime != ''">and depart_time =
+                    #{departTime}
+                </if>
+                            <if test="orderNumber != null and orderNumber != ''">and order_number =
+                    #{orderNumber}
+                </if>
+                            <if test="createTime != null and createTime != ''">and create_time =
+                    #{createTime}
+                </if>
+                            <if test="updateTime != null and updateTime != ''">and update_time =
+                    #{updateTime}
+                </if>
+                    </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+
+
+    <select id="listStatistics" resultType="com.gui.module.bus.domain.SubOrderDO">
+        select `id`,`uid`,`pay_status`,`amount`,`pay_time`,`total_order_id`,`bus_time_id`,`boarding_position`,`start_position`,`end_position`,`depart_time`,`order_number`,`create_time`,`update_time`,realname        from bus_sub_order
+        <where>
+
+            <if test="startTime != null and startTime != ''">
+                <![CDATA[and create_time >= #{startTime}]]>
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[and create_time < #{endTime}]]>
+            </if>
+        </where>
+
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from bus_sub_order
+        <where>
+                            <if test="id != null and id != ''">and id =
+                    #{id}
+                </if>
+                            <if test="uid != null and uid != ''">and uid =
+                    #{uid}
+                </if>
+                            <if test="payStatus != null and payStatus != ''">and pay_status =
+                    #{payStatus}
+                </if>
+                            <if test="amount != null and amount != ''">and amount =
+                    #{amount}
+                </if>
+                            <if test="payTime != null and payTime != ''">and pay_time =
+                    #{payTime}
+                </if>
+                            <if test="totalOrderId != null and totalOrderId != ''">and total_order_id =
+                    #{totalOrderId}
+                </if>
+                            <if test="busTimeId != null and busTimeId != ''">and bus_time_id =
+                    #{busTimeId}
+                </if>
+                            <if test="boardingPosition != null and boardingPosition != ''">and boarding_position =
+                    #{boardingPosition}
+                </if>
+                            <if test="startPosition != null and startPosition != ''">and start_position =
+                    #{startPosition}
+                </if>
+                            <if test="endPosition != null and endPosition != ''">and end_position =
+                    #{endPosition}
+                </if>
+                            <if test="departTime != null and departTime != ''">and depart_time =
+                    #{departTime}
+                </if>
+                            <if test="orderNumber != null and orderNumber != ''">and order_number =
+                    #{orderNumber}
+                </if>
+                            <if test="createTime != null and createTime != ''">and create_time =
+                    #{createTime}
+                </if>
+                            <if test="updateTime != null and updateTime != ''">and update_time =
+                    #{updateTime}
+                </if>
+                    </where>
+    </select>
+
+    <insert id="save" parameterType="com.gui.module.bus.domain.SubOrderDO"            useGeneratedKeys="true" keyProperty="id">
+		insert into bus_sub_order
+		(
+                    			`uid`, 
+                    			`pay_status`, 
+                    			`amount`, 
+                    			`pay_time`, 
+                    			`total_order_id`, 
+                    			`bus_time_id`, 
+                    			`boarding_position`, 
+                    			`start_position`, 
+                    			`end_position`, 
+                    			`depart_time`, 
+                    			`order_number`, 
+                    			`create_time`, 
+                    			`update_time`
+            		)
+		values
+		(
+                    			#{uid}, 
+                    			#{payStatus}, 
+                    			#{amount}, 
+                    			#{payTime}, 
+                    			#{totalOrderId}, 
+                    			#{busTimeId}, 
+                    			#{boardingPosition}, 
+                    			#{startPosition}, 
+                    			#{endPosition}, 
+                    			#{departTime}, 
+                    			#{orderNumber}, 
+                    			#{createTime}, 
+                    			#{updateTime}
+            		)
+	</insert>
+
+    <update id="update" parameterType="com.gui.module.bus.domain.SubOrderDO">
+        update bus_sub_order
+        <set>
+                                                                            <if test="uid != null">`uid` = #{uid
+                        }, </if>
+                                                                <if test="payStatus != null">`pay_status` = #{payStatus
+                        }, </if>
+                                                                <if test="amount != null">`amount` = #{amount
+                        }, </if>
+                                                                <if test="payTime != null">`pay_time` = #{payTime
+                        }, </if>
+                                                                <if test="totalOrderId != null">`total_order_id` = #{totalOrderId
+                        }, </if>
+                                                                <if test="busTimeId != null">`bus_time_id` = #{busTimeId
+                        }, </if>
+                                                                <if test="boardingPosition != null">`boarding_position` = #{boardingPosition
+                        }, </if>
+                                                                <if test="startPosition != null">`start_position` = #{startPosition
+                        }, </if>
+                                                                <if test="endPosition != null">`end_position` = #{endPosition
+                        }, </if>
+                                                                <if test="departTime != null">`depart_time` = #{departTime
+                        }, </if>
+                                                                <if test="orderNumber != null">`order_number` = #{orderNumber
+                        }, </if>
+                                                                <if test="createTime != null">`create_time` = #{createTime
+                        }, </if>
+                                                                <if test="updateTime != null">`update_time` = #{updateTime
+                        }</if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from bus_sub_order where id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from bus_sub_order where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
