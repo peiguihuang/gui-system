@@ -1,48 +1,17 @@
 $().ready(function () {
     validateRule();
-    selectLoad();
 });
 
 $.validator.setDefaults({
     submitHandler: function () {
-        save();
+        update();
     }
 });
-
-
-function selectLoad() {
-    var html = "";
-    $.ajax({
-        url : '/bus/line/all',
-        success : function(data) {
-            //加载数据
-            for (var i = 0; i < data.length; i++) {
-                html += '<option value="' + data[i].id + '">' + data[i].startPosition + ' -> ' + data[i].endPosition + '</option>'
-            }
-            $("#busLineId").append(html);
-            $("#busLineId").chosen({
-                maxHeight : 200
-            });
-            //点击事件
-            $('.chosen-select').on('change', function(e, params) {
-                console.log(params.selected);
-                var opt = {
-                    query : {
-                        type : params.selected,
-                    }
-                }
-                $('#exampleTable').bootstrapTable('refresh', opt);
-            });
-        }
-    });
-}
-
-
-function save() {
+function update() {
     $.ajax({
         cache: true,
         type: "POST",
-        url: "/bus/time/save",
+        url: "/bus/user/update",
         data: $('#signupForm').serialize(),// 你的formid
         async: false,
         error: function (request) {
@@ -73,7 +42,7 @@ function validateRule() {
         },
         messages: {
             name: {
-                required: icon + "请输入姓名"
+                required: icon + "请输入名字"
             }
         }
     })

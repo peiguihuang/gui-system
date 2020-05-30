@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gui.module.bus.dao.BusUserDao">
+
+    <select id="get" resultType="com.gui.module.bus.domain.UserDO">
+		select `id`,`uid`,`realname`,`sex`,`email`,`mobile`,`weixin`,`qq`,`csrq`,`mz`,`photo`,`avatar`,`roleid`,`number`,`identity`,`identity_id`,`sfzx`,`extra`,`create_time`,`update_time` from bus_user where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.gui.module.bus.domain.UserDO">
+        select `id`,`uid`,`realname`,`sex`,`email`,`mobile`,`weixin`,`qq`,`csrq`,`mz`,`photo`,`avatar`,`roleid`,`number`,`identity`,`identity_id`,`sfzx`,`extra`,`create_time`,`update_time`        from bus_user
+        <where>
+                            <if test="id != null and id != ''">and id =
+                    #{id}
+                </if>
+                            <if test="uid != null and uid != ''">and uid =
+                    #{uid}
+                </if>
+                            <if test="realname != null and realname != ''">and realname =
+                    #{realname}
+                </if>
+                            <if test="sex != null and sex != ''">and sex =
+                    #{sex}
+                </if>
+                            <if test="email != null and email != ''">and email =
+                    #{email}
+                </if>
+                            <if test="mobile != null and mobile != ''">and mobile =
+                    #{mobile}
+                </if>
+                            <if test="weixin != null and weixin != ''">and weixin =
+                    #{weixin}
+                </if>
+                            <if test="qq != null and qq != ''">and qq =
+                    #{qq}
+                </if>
+                            <if test="csrq != null and csrq != ''">and csrq =
+                    #{csrq}
+                </if>
+                            <if test="mz != null and mz != ''">and mz =
+                    #{mz}
+                </if>
+                            <if test="photo != null and photo != ''">and photo =
+                    #{photo}
+                </if>
+                            <if test="avatar != null and avatar != ''">and avatar =
+                    #{avatar}
+                </if>
+                            <if test="roleid != null and roleid != ''">and roleid =
+                    #{roleid}
+                </if>
+                            <if test="number != null and number != ''">and number =
+                    #{number}
+                </if>
+                            <if test="identity != null and identity != ''">and identity =
+                    #{identity}
+                </if>
+                            <if test="identityId != null and identityId != ''">and identity_id =
+                    #{identityId}
+                </if>
+                            <if test="sfzx != null and sfzx != ''">and sfzx =
+                    #{sfzx}
+                </if>
+                            <if test="extra != null and extra != ''">and extra =
+                    #{extra}
+                </if>
+                            <if test="createTime != null and createTime != ''">and create_time =
+                    #{createTime}
+                </if>
+                            <if test="updateTime != null and updateTime != ''">and update_time =
+                    #{updateTime}
+                </if>
+                    </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from bus_user
+        <where>
+                            <if test="id != null and id != ''">and id =
+                    #{id}
+                </if>
+                            <if test="uid != null and uid != ''">and uid =
+                    #{uid}
+                </if>
+                            <if test="realname != null and realname != ''">and realname =
+                    #{realname}
+                </if>
+                            <if test="sex != null and sex != ''">and sex =
+                    #{sex}
+                </if>
+                            <if test="email != null and email != ''">and email =
+                    #{email}
+                </if>
+                            <if test="mobile != null and mobile != ''">and mobile =
+                    #{mobile}
+                </if>
+                            <if test="weixin != null and weixin != ''">and weixin =
+                    #{weixin}
+                </if>
+                            <if test="qq != null and qq != ''">and qq =
+                    #{qq}
+                </if>
+                            <if test="csrq != null and csrq != ''">and csrq =
+                    #{csrq}
+                </if>
+                            <if test="mz != null and mz != ''">and mz =
+                    #{mz}
+                </if>
+                            <if test="photo != null and photo != ''">and photo =
+                    #{photo}
+                </if>
+                            <if test="avatar != null and avatar != ''">and avatar =
+                    #{avatar}
+                </if>
+                            <if test="roleid != null and roleid != ''">and roleid =
+                    #{roleid}
+                </if>
+                            <if test="number != null and number != ''">and number =
+                    #{number}
+                </if>
+                            <if test="identity != null and identity != ''">and identity =
+                    #{identity}
+                </if>
+                            <if test="identityId != null and identityId != ''">and identity_id =
+                    #{identityId}
+                </if>
+                            <if test="sfzx != null and sfzx != ''">and sfzx =
+                    #{sfzx}
+                </if>
+                            <if test="extra != null and extra != ''">and extra =
+                    #{extra}
+                </if>
+                            <if test="createTime != null and createTime != ''">and create_time =
+                    #{createTime}
+                </if>
+                            <if test="updateTime != null and updateTime != ''">and update_time =
+                    #{updateTime}
+                </if>
+                    </where>
+    </select>
+
+    <insert id="save" parameterType="com.gui.module.bus.domain.UserDO"            useGeneratedKeys="true" keyProperty="id">
+		insert into bus_user
+		(
+                    			`uid`, 
+                    			`realname`, 
+                    			`sex`, 
+                    			`email`, 
+                    			`mobile`, 
+                    			`weixin`, 
+                    			`qq`, 
+                    			`csrq`, 
+                    			`mz`, 
+                    			`photo`, 
+                    			`avatar`, 
+                    			`roleid`, 
+                    			`number`, 
+                    			`identity`, 
+                    			`identity_id`, 
+                    			`sfzx`, 
+                    			`extra`, 
+                    			`create_time`, 
+                    			`update_time`
+            		)
+		values
+		(
+                    			#{uid}, 
+                    			#{realname}, 
+                    			#{sex}, 
+                    			#{email}, 
+                    			#{mobile}, 
+                    			#{weixin}, 
+                    			#{qq}, 
+                    			#{csrq}, 
+                    			#{mz}, 
+                    			#{photo}, 
+                    			#{avatar}, 
+                    			#{roleid}, 
+                    			#{number}, 
+                    			#{identity}, 
+                    			#{identityId}, 
+                    			#{sfzx}, 
+                    			#{extra}, 
+                    			#{createTime}, 
+                    			#{updateTime}
+            		)
+	</insert>
+
+    <update id="update" parameterType="com.gui.module.bus.domain.UserDO">
+        update bus_user
+        <set>
+                                                                            <if test="uid != null">`uid` = #{uid
+                        }, </if>
+                                                                <if test="realname != null">`realname` = #{realname
+                        }, </if>
+                                                                <if test="sex != null">`sex` = #{sex
+                        }, </if>
+                                                                <if test="email != null">`email` = #{email
+                        }, </if>
+                                                                <if test="mobile != null">`mobile` = #{mobile
+                        }, </if>
+                                                                <if test="weixin != null">`weixin` = #{weixin
+                        }, </if>
+                                                                <if test="qq != null">`qq` = #{qq
+                        }, </if>
+                                                                <if test="csrq != null">`csrq` = #{csrq
+                        }, </if>
+                                                                <if test="mz != null">`mz` = #{mz
+                        }, </if>
+                                                                <if test="photo != null">`photo` = #{photo
+                        }, </if>
+                                                                <if test="avatar != null">`avatar` = #{avatar
+                        }, </if>
+                                                                <if test="roleid != null">`roleid` = #{roleid
+                        }, </if>
+                                                                <if test="number != null">`number` = #{number
+                        }, </if>
+                                                                <if test="identity != null">`identity` = #{identity
+                        }, </if>
+                                                                <if test="identityId != null">`identity_id` = #{identityId
+                        }, </if>
+                                                                <if test="sfzx != null">`sfzx` = #{sfzx
+                        }, </if>
+                                                                <if test="extra != null">`extra` = #{extra
+                        }, </if>
+                                                                <if test="createTime != null">`create_time` = #{createTime
+                        }, </if>
+                                                                <if test="updateTime != null">`update_time` = #{updateTime
+                        }</if>
+                                    </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from bus_user where id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from bus_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

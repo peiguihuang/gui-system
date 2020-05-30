@@ -1,11 +1,8 @@
 package com.gui.module.bus.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-import com.gui.base.BasePageResponse;
-import com.gui.base.BaseResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -16,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gui.module.bus.domain.TimeDO;
-import com.gui.module.bus.service.TimeService;
+import com.gui.base.BasePageResponse;
+import com.gui.base.BaseResponse;
+
+import com.gui.module.bus.domain.UserDO;
+import com.gui.module.bus.service.BusUserService;
 import com.gui.module.common.utils.Query;
 import org.springframework.stereotype.Controller;
 import com.gui.utils.ResponseUtils;
@@ -27,45 +27,44 @@ import com.gui.utils.ResponseUtils;
  *
  * @author peigui.huang
  * @email 1157688065@qq.com
- * @date 2020-05-29 22:17:27
+ * @date 2020-05-30 09:50:30
  */
 
 @Controller
-@RequestMapping("/bus/time")
-public class TimeController {
+@RequestMapping("/bus/user")
+public class BusUserController {
     @Autowired
-    private TimeService timeService;
+    private BusUserService busUserService;
 
     @GetMapping()
-    @RequiresPermissions("bus:time:time")
-    String Time() {
-        return "bus/time/time";
+    @RequiresPermissions("bus:user:user")
+    String User() {
+        return "bus/user/user";
     }
 
     @ResponseBody
     @GetMapping("/list")
-    @RequiresPermissions("bus:time:time")
+    @RequiresPermissions("bus:user:user")
     public BasePageResponse list(@RequestParam Map<String, Object> params) {
         //查询列表数据
         Query query = new Query(params);
-        List<TimeDO> timeList = timeService.list(query);
-        int total = timeService.count(query);
-        return ResponseUtils.buildPageSuccess(total, timeList);
+        List<UserDO> userList = busUserService.list(query);
+        int total = busUserService.count(query);
+        return ResponseUtils.buildPageSuccess(total, userList);
     }
 
     @GetMapping("/add")
-    @RequiresPermissions("bus:time:add")
+    @RequiresPermissions("bus:user:add")
     String add() {
-        return "bus/time/add";
+        return "bus/user/add";
     }
 
     @GetMapping("/edit/{id}")
-    @RequiresPermissions("bus:time:edit")
+    @RequiresPermissions("bus:user:edit")
     String edit(@PathVariable("id") Long id, Model model) {
-            TimeDO time = timeService.get(id);
-            time.setDepartTimeStr(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time.getDepartTime()));
-        model.addAttribute("time", time);
-        return "bus/time/edit";
+            UserDO user = busUserService.get(id);
+        model.addAttribute("user", user);
+        return "bus/user/edit";
     }
 
     /**
@@ -73,9 +72,9 @@ public class TimeController {
      */
     @ResponseBody
     @PostMapping("/save")
-    @RequiresPermissions("bus:time:add")
-    public BaseResponse<Void> save( TimeDO time) {
-        if (timeService.save(time) > 0) {
+    @RequiresPermissions("bus:user:add")
+    public BaseResponse<Void> save( UserDO user) {
+        if (busUserService.save(user) > 0) {
             return ResponseUtils.success();
         }
         return ResponseUtils.fail();
@@ -86,9 +85,9 @@ public class TimeController {
      */
     @ResponseBody
     @RequestMapping("/update")
-    @RequiresPermissions("bus:time:edit")
-    public BaseResponse<Void> update( TimeDO time) {
-            timeService.update(time);
+    @RequiresPermissions("bus:user:edit")
+    public BaseResponse<Void> update( UserDO user) {
+            busUserService.update(user);
         return ResponseUtils.success();
     }
 
@@ -97,9 +96,9 @@ public class TimeController {
      */
     @PostMapping("/remove")
     @ResponseBody
-    @RequiresPermissions("bus:time:remove")
+    @RequiresPermissions("bus:user:remove")
     public BaseResponse<Void> remove( Long id) {
-        if (timeService.remove(id) > 0) {
+        if (busUserService.remove(id) > 0) {
 			return ResponseUtils.success();
         }
 		return ResponseUtils.fail();
@@ -110,9 +109,9 @@ public class TimeController {
      */
     @PostMapping("/batchRemove")
     @ResponseBody
-    @RequiresPermissions("bus:time:batchRemove")
+    @RequiresPermissions("bus:user:batchRemove")
     public BaseResponse<Void> remove(@RequestParam("ids[]") Long[] ids) {
-            timeService.batchRemove(ids);
+            busUserService.batchRemove(ids);
 		return ResponseUtils.success();
     }
 

@@ -11,95 +11,40 @@
                     <form class="form-horizontal m-t" id="signupForm">
                         <input id="id" name="id" th:value="${time.id}"
                                type="hidden">
-                                                                                                                                        <div class="form-group">
-                                    <label class="col-sm-3 control-label">路线：</label>
-                                    <div class="col-sm-8">
-                                        <input id="busLineId" name="busLineId"
-                                               th:value="${time.busLineId}" class="form-control"
-                                               type="text">
-                                    </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">选择路线：</label>
+                                <div class="col-sm-8">
+                                    <select id="busLineId" name="busLineId" data-placeholder="选择路线" class="form-control chosen-select"
+                                            tabindex="2" style="width: 100%">
+                                        <option value="">选择路线</option>
+                                    </select>
+                                    <input id="busLineIdNew" name="busLineIdIdNew" th:value="${time.busLineId}" type="hidden">
+
                                 </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">出发路线：</label>
-                                    <div class="col-sm-8">
-                                        <input id="departTime" name="departTime"
-                                               th:value="${time.departTime}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">0有效 1删除：</label>
-                                    <div class="col-sm-8">
-                                        <input id="status" name="status"
-                                               th:value="${time.status}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">金额：</label>
-                                    <div class="col-sm-8">
-                                        <input id="amount" name="amount"
-                                               th:value="${time.amount}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">：</label>
-                                    <div class="col-sm-8">
-                                        <input id="orderNumber" name="orderNumber"
-                                               th:value="${time.orderNumber}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">0无锁 1有锁：</label>
-                                    <div class="col-sm-8">
-                                        <input id="lock" name="lock"
-                                               th:value="${time.lock}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">创建时间：</label>
-                                    <div class="col-sm-8">
-                                        <input id="createTime" name="createTime"
-                                               th:value="${time.createTime}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">更新时间：</label>
-                                    <div class="col-sm-8">
-                                        <input id="updateTime" name="updateTime"
-                                               th:value="${time.updateTime}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">起点：</label>
-                                    <div class="col-sm-8">
-                                        <input id="startPosition" name="startPosition"
-                                               th:value="${time.startPosition}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">终点：</label>
-                                    <div class="col-sm-8">
-                                        <input id="endPosition" name="endPosition"
-                                               th:value="${time.endPosition}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                                                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">：</label>
-                                    <div class="col-sm-8">
-                                        <input id="boardingPosition" name="boardingPosition"
-                                               th:value="${time.boardingPosition}" class="form-control"
-                                               type="text">
-                                    </div>
-                                </div>
-                                                                            <div class="form-group">
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">出发时间：</label>
+                            <div class="col-sm-8">
+                                <input id="departTime" name="departTime"
+                                       th:value="${time.departTimeStr}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">金额：</label>
+                            <div class="col-sm-8">
+                                <input id="amount" name="amount"
+                                       th:value="${time.amount}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button type="submit" class="btn btn-primary">提交</button>
                             </div>

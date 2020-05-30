@@ -18,14 +18,14 @@ function selectLoad() {
         success : function(data) {
             //加载数据
             for (var i = 0; i < data.length; i++) {
-                if ($("#merchantIdNew").val() == data[i].id){
-                    html += '<option value="' + data[i].id + '" selected="selected">' + data[i].startPosition + '->' + data[i].endPosition + '</option>'
+                if ($("#busLineIdNew").val() == data[i].id){
+                    html += '<option value="' + data[i].id + '" selected="selected">' + data[i].startPosition + ' -> ' + data[i].endPosition + '</option>'
                 }else {
-                    html += '<option value="' + data[i].id + '">' + data[i].merchantName + '</option>'
+                    html += '<option value="' + data[i].id + '">' + data[i].startPosition + ' -> ' + data[i].endPosition +  '</option>'
                 }
             }
-            $("#merchantId").append(html);
-            $("#merchantId").chosen({
+            $("#busLineId").append(html);
+            $("#busLineId").chosen({
                 maxHeight : 200
             });
             //点击事件

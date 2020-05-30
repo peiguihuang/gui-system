@@ -29,12 +29,13 @@ public class TimeDO implements Serializable {
             /**
          * 路线
          */
-        private String busLineId;
+        private Long busLineId;
 
             /**
          * 出发路线
          */
         private Date departTime;
+    private String departTimeStr;
 
             /**
          * 0有效 1删除

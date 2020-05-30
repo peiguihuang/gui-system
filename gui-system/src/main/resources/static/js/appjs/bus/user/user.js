@@ -1,4 +1,4 @@
-var prefix = "/bus/time"
+var prefix = "/bus/user"
 $(function () {
     load();
 });
@@ -46,40 +46,59 @@ function load() {
                     {
                         checkbox: true
                     },
-                    {
-                        field: 'id',
-                        title: 'ID'
-                    },
-
-                    {
-                        field: 'startPosition',
-                        title: '起点'
-                    },
-                    {
-                        field: 'endPosition',
-                        title: '终点'
-                    },
-                    {
-                        field: 'boardingPosition',
-                        title: '上车点'
-                    },
-                    {
-                        field: 'departTime',
-                        title: '出发时间'
-                    },
-                    {
-                        field: 'amount',
-                        title: '金额（元）'
-                    },
-                    {
-                        field: 'createTime',
-                        title: '创建时间'
-                    },
-                    {
-                        field: 'updateTime',
-                        title: '更新时间'
-                    },
-                    {
+                                            {
+                            field: 'id',
+                            title: 'ID'
+                        },
+                                            {
+                            field: 'uid',
+                            title: '用户ID'
+                        },
+                                            {
+                            field: 'realname',
+                            title: '真实姓名'
+                        },
+                                            {
+                            field: 'sex',
+                            title: '性别'
+                        },
+                                            {
+                            field: 'email',
+                            title: '邮箱'
+                        },
+                                            {
+                            field: 'mobile',
+                            title: '手机号'
+                        },
+                                            {
+                            field: 'weixin',
+                            title: '微信号'
+                        },
+                                            {
+                            field: 'qq',
+                            title: 'qq号'
+                        },
+                                            {
+                            field: 'number',
+                            title: '学工号'
+                        },
+                                            {
+                            field: 'identity',
+                            title: '身份角色'
+                        },
+                                            {
+                            field: 'extra',
+                            title: '扩展信息'
+                        },
+                                            {
+                            field: 'createTime',
+                            title: '创建时间'
+                        },
+                                            {
+                            field: 'updateTime',
+                            title: '更新时间'
+                        },
+                                        {
                         title: '操作',
                         field: 'id',
                         align: 'center',
@@ -98,11 +117,9 @@ function load() {
                     }]
             });
 }
-
 function reLoad() {
     $('#exampleTable').bootstrapTable('refresh');
 }
-
 function add() {
     layer.open({
         type: 2,
@@ -113,7 +130,6 @@ function add() {
         content: prefix + '/add' // iframe的url
     });
 }
-
 function edit(id) {
     layer.open({
         type: 2,
@@ -124,7 +140,6 @@ function edit(id) {
         content: prefix + '/edit/' + id // iframe的url
     });
 }
-
 function remove(id) {
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
@@ -149,7 +164,6 @@ function remove(id) {
 
 function resetPwd(id) {
 }
-
 function batchRemove() {
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
     if (rows.length == 0) {
