@@ -39,7 +39,7 @@
         <commons-lang3.version>3.6</commons-lang3.version>
         <druid.version>1.0.28</druid.version>
         <mybatis-spring-boot-starter.version>1.1.1</mybatis-spring-boot-starter.version>
-        <mybatis.version>3.4.4</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
 
     </properties>
 
