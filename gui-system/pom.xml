@@ -33,7 +33,7 @@
         <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>
         <shiro-ehcache.version>1.4.0</shiro-ehcache.version>
         <shiro-spring.version>1.3.2</shiro-spring.version>
-        <shiro-core.version>1.3.2</shiro-core.version>
+        <shiro-core.version>1.9.1</shiro-core.version>
         <commons-io.version>2.5</commons-io.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <commons-lang3.version>3.6</commons-lang3.version>
